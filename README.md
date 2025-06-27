@@ -1,0 +1,1 @@
+# singai_pos_management_backend
