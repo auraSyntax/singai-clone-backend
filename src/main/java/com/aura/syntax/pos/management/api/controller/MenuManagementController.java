@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/inventory")
+@RequestMapping("api/v1/menu-management")
 @RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000"})
 
-public class InventoryController {
+public class MenuManagementController {
 }

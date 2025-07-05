@@ -2,22 +2,26 @@ package com.aura.syntax.pos.management.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Inventory {
+public class MenuItemIncredients {
     @Id
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @GeneratedValue(generator = "uuid")
-    private String id;
-    private String inventoryName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long menuItemsId;
+    private Long ingredientsId;
+    private Integer quantityRequired;
+    private LocalDateTime createdAt;
 }
