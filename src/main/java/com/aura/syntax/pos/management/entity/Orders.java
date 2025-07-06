@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -37,4 +38,7 @@ public class Orders {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime completed;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderId")
+    private Set<OrderItems> orderItems;
 }
