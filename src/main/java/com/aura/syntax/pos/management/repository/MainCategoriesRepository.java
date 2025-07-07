@@ -12,7 +12,8 @@ import java.util.List;
 public interface MainCategoriesRepository extends JpaRepository<MainCategories,Long> {
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.MainCategoryDto(m.id,m.mainCategoryName) " +
-           "FROM MainCategories m ")
+           "FROM MainCategories m " +
+           "WHERE m.status = 'ACTIVE'")
     List<MainCategoryDto> getAllMainCategories();
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.MainCategoryDto(m.id, m.mainCategoryName,m.description,m.imageUrl,m.status) " +

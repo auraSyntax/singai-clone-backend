@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("api/v1/main-category")
 @RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000"})
-
 public class MainCategoryController {
 
     private final MainCategoryService mainCategoryService;

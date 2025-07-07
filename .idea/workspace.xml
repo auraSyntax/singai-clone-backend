@@ -53,10 +53,17 @@
     "Application.PosManagementApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/api/controller"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\api\controller" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.aura.syntax.pos.management.api.controller.advice" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.aura.syntax.pos.management.api.dto" />
       <recent name="com.aura.syntax.pos.management.enums" />

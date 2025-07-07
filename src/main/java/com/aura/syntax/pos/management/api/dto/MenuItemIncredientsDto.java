@@ -1,4 +1,4 @@
-package com.aura.syntax.pos.management.entity;
+package com.aura.syntax.pos.management.api.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,18 +11,15 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class MenuItemIncredients {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MenuItemIncredientsDto {
     private Long id;
     private Long menuItemsId;
     private Long ingredientsId;
-    private String unit;
     private Integer quantityRequired;
+    private String unit;
     private LocalDateTime createdAt;
 }
