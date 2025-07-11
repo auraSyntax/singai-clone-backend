@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/ingredients")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:5173"})
 public class IngredientsController {
 
     private final IngredientsService ingredientsService;
@@ -32,7 +32,7 @@ public class IngredientsController {
     @GetMapping("/get-all")
     public PaginatedResponseDto<IngredientsDto> getAllIngredientsPagination(@RequestParam(value = "page") Integer page,
                                                                         @RequestParam(value = "size") Integer size,
-                                                                        @RequestParam(value = "search") String search){
+                                                                        @RequestParam(value = "search",required = false) String search){
         return ingredientsService.getAllIngredientsPagination(page,size,search);
     }
 

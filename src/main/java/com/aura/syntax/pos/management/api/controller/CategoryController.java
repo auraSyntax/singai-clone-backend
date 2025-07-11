@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/category")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:5173"})
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -31,7 +31,7 @@ public class CategoryController {
     @GetMapping("/get-all")
     public PaginatedResponseDto<CategoryDto> getAllCategoriesPagination(@RequestParam(value = "page") Integer page,
                                                                          @RequestParam(value = "size") Integer size,
-                                                                         @RequestParam(value = "search") String search,
+                                                                         @RequestParam(value = "search",required = false) String search,
                                                                         @RequestParam(value = "mainCategoryId",required = false) Long mainCategoryId){
         return categoryService.getAllCategoriesPagination(page,size,search,mainCategoryId);
     }
