@@ -74,6 +74,7 @@ public class CategoryService {
                 .categoryName(categories.getName())
                 .imageUrl(categories.getImageUrl())
                 .description(categories.getDescription())
+                .mainCategoryId(categories.getMainCategoryId())
                 .build();
         return mainCategoryDto;
     }
