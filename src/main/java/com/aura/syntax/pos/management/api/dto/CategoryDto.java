@@ -20,11 +20,12 @@ public class CategoryDto {
     private String status;
     private Long mainCategoryId;
 
-    public CategoryDto(Long id, String categoryName, String description, String imageUrl, Status status) {
+    public CategoryDto(Long id, String categoryName, String description, String imageUrl, Status status,Long mainCategoryId) {
         this.id = id;
         this.categoryName = categoryName;
         this.description = description;
         this.imageUrl = imageUrl;
         this.status = status.getMappedValue();
+        this.mainCategoryId = mainCategoryId;
     }
 }

@@ -90,6 +90,7 @@ public class CategoryService {
         existingCategory.setDescription(categoryDto.getDescription());
         existingCategory.setImageUrl(categoryDto.getImageUrl());
         existingCategory.setUpdatedAt(LocalDateTime.now());
+        existingCategory.setMainCategoryId(categoryDto.getMainCategoryId());
         categoryRepository.save(existingCategory);
 
         return new ResponseDto("Category updated successfully");
