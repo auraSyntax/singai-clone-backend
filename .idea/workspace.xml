@@ -5,13 +5,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/TableController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/TableDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/Tables.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/TablesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/TableService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/RoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/RoleDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/RoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/RoleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/PosManagementApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/CategoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/MainCategoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/MenuItemsController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/advice/ControllerExceptionHandler$ApiError$ApiErrorBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/advice/ControllerExceptionHandler$ApiError.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/controller/advice/ControllerExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/AuthRequest$AuthRequestBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/AuthRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/AuthResponse$AuthResponseBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/AuthResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/CategoryDto$CategoryDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/CategoryDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MainCategoryDto$MainCategoryDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MainCategoryDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MenuItemIncredientsDto$MenuItemIncredientsDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MenuItemIncredientsDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MenuItemsDto$MenuItemsDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/MenuItemsDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/PaginatedResponseDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/RefreshTokenRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/ResponseDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/api/dto/UserDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/config/ApplicationConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/config/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/config/JwtService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/config/RefreshTokenService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/Categories$CategoriesBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/Categories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/MainCategories$MainCategoriesBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/MainCategories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/MenuItems$MenuItemsBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/MenuItems.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/OrderItems$OrderItemsBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/OrderItems.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/Orders$OrdersBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/Orders.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/RefreshToken$RefreshTokenBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/RefreshToken.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/RestaurantTables$RestaurantTablesBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/RestaurantTables.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/User$UserBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/Availability.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/OrderStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/OrderType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/PaymentMethod.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/PaymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/TableStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/enums/UserType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/exception/ServiceException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/repository/CategoryRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/repository/MainCategoriesRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/repository/MenuItemsRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/repository/RefreshTokenRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/service/AuthenticationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/service/CategoryService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/service/IngredientsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/service/MainCategoryService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aura/syntax/pos/management/service/MenuItemsService.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,19 +122,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.PosManagementApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/config&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.PosManagementApplication.executor": "Run",
+    "Maven.singai_pos_management [clean,install].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/config",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\config" />
@@ -83,11 +147,11 @@
       <recent name="com.aura.syntax.pos.management.api.controller.advice" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.aura.syntax.pos.management.api.dto" />
       <recent name="com.aura.syntax.pos.management.repository" />
       <recent name="com.aura.syntax.pos.management.entity" />
       <recent name="com.aura.syntax.pos.management.config" />
       <recent name="com.aura.syntax.pos.management.service" />
-      <recent name="com.aura.syntax.pos.management.api.dto" />
     </key>
   </component>
   <component name="RunManager">
@@ -196,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753187029723</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1753199903572</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1753199903572</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
