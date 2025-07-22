@@ -13,4 +13,5 @@ public class AuthResponse {
     private String accessToken;
     private String refreshToken;
     private UserDto userDto;
+    private String expirationTime;
 }

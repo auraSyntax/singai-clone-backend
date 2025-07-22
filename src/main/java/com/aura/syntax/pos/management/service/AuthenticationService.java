@@ -11,6 +11,7 @@ import com.aura.syntax.pos.management.entity.User;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,10 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenService refreshTokenService;
+
+    @Value("${app.jwt.refresh.duration}")
+    private String expirationTime;
+
 
     public AuthResponse authenticate(AuthRequest request) {
         try {
@@ -66,11 +71,14 @@ public class AuthenticationService {
         userDto.setUserName(user.getFirstName() + " " + user.getLastName());
         userDto.setEmail(user.getEmail());
         userDto.setId(user.getId());
+        userDto.setRoleId(user.getRoleId());
+
 
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken.getToken())
                 .userDto(userDto)
+                .expirationTime(expirationTime)
                 .build();
     }
 

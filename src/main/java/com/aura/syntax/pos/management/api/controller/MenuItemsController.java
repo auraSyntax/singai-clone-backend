@@ -1,6 +1,5 @@
 package com.aura.syntax.pos.management.api.controller;
 
-import com.aura.syntax.pos.management.api.dto.CategoryDto;
 import com.aura.syntax.pos.management.api.dto.MenuItemsDto;
 import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
 import com.aura.syntax.pos.management.api.dto.ResponseDto;
@@ -34,5 +33,26 @@ public class MenuItemsController {
                                                                         @RequestParam(value = "search",required = false) String search,
                                                                         @RequestParam(value = "categoryId",required = false) Long categoryId){
         return menuItemsService.getAllMenuItemsPagination(page,size,search,categoryId);
+    }
+
+    @GetMapping("/get-by-id")
+    public MenuItemsDto getMenuItemById(@RequestParam(value = "id") Long id){
+        return menuItemsService.getMenuItemById(id);
+    }
+
+    @PutMapping
+    public ResponseDto updateMenuItem(@RequestBody MenuItemsDto menuItemsDto){
+        return menuItemsService.updateMenuItem(menuItemsDto);
+    }
+
+    @PutMapping("/update-status")
+    public ResponseDto updateStatus(@RequestParam(value = "id") Long id,
+                                    @RequestParam(value = "status") String status){
+        return menuItemsService.updateStatus(id,status);
+    }
+
+    @DeleteMapping
+    public ResponseDto deleteMenuItem(@RequestParam(value = "id") Long id){
+        return menuItemsService.deleteMenuItem(id);
     }
 }

@@ -21,4 +21,8 @@ public interface MainCategoriesRepository extends JpaRepository<MainCategories,L
            "WHERE :search IS NULL OR LOWER(m.mainCategoryName) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<MainCategoryDto> getAllMainCategoriesPagination(Pageable pageable, String search);
 
+    @Query("SELECT m.mainCategoryName " +
+           "FROM MainCategories m " +
+           "WHERE m.id = :id")
+    String getMainCategoryNameById(Long id);
 }

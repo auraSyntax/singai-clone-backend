@@ -48,7 +48,12 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getAllCategories(Long mainCategoryId) {
-        return categoryRepository.getAllCategories(mainCategoryId);
+        List<CategoryDto> categoryDtos = categoryRepository.getAllCategories(mainCategoryId);
+        categoryDtos.stream().forEach(categoryDto -> {
+            categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
+        });
+
+        return categoryDtos;
     }
 
     public PaginatedResponseDto<CategoryDto> getAllCategoriesPagination(Integer page, Integer size, String search,Long mainCategoryId) {
@@ -56,6 +61,9 @@ public class CategoryService {
         Page<CategoryDto> categoryDtos = categoryRepository.getAllCategoriesPagination(pageable,search,mainCategoryId);
         PaginatedResponseDto<CategoryDto> categoryDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<CategoryDto> categories = categoryDtos.getContent();
+        categoryDtos.stream().forEach(categoryDto -> {
+            categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
+        });
         categoryDtoPaginatedResponseDto.setData(categories);
         categoryDtoPaginatedResponseDto.setCurrentPage(page);
         categoryDtoPaginatedResponseDto.setTotalPages(categoryDtos.getTotalPages());
@@ -75,6 +83,7 @@ public class CategoryService {
                 .imageUrl(categories.getImageUrl())
                 .description(categories.getDescription())
                 .mainCategoryId(categories.getMainCategoryId())
+                .mainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categories.getMainCategoryId()))
                 .build();
         return mainCategoryDto;
     }

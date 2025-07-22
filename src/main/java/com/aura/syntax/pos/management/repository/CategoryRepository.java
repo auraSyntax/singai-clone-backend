@@ -25,4 +25,9 @@ public interface CategoryRepository extends JpaRepository<Categories, Long> {
            "AND :mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId " +
            "ORDER BY c.createdAt")
     Page<CategoryDto> getAllCategoriesPagination(Pageable pageable, String search, Long mainCategoryId);
+
+    @Query("SELECT c.name " +
+           "FROM Categories c " +
+           "WHERE c.id = :id")
+    String getCategoryNameById(Long id);
 }

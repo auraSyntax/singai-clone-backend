@@ -19,6 +19,7 @@ public class CategoryDto {
     private String imageUrl;
     private String status;
     private Long mainCategoryId;
+    private String mainCategoryName;
 
     public CategoryDto(Long id, String categoryName, String description, String imageUrl, Status status,Long mainCategoryId) {
         this.id = id;
