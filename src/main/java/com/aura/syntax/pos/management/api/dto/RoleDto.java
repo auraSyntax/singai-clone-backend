@@ -13,4 +13,9 @@ public class RoleDto {
     private Long id;
     private String roleName;
     private boolean isActive;
+
+    public RoleDto(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
 }
