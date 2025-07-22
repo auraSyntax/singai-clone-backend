@@ -1,31 +1,28 @@
 package com.aura.syntax.pos.management.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Ingredients {
+public class MenuItemStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private Long menuItemsId;
+    private Long stockId;
     private String unit;
-    private Integer currentStock;
-    private Integer minimumStock;
-    private Double costPerUnit;
+    private Integer quantityRequired;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ingredientsId")
-    Set<MenuItemIncredients> menuItemIncredients;
 }

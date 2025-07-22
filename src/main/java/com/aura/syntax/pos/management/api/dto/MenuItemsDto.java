@@ -1,10 +1,8 @@
 package com.aura.syntax.pos.management.api.dto;
 
-import com.aura.syntax.pos.management.entity.MenuItemIncredients;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.enums.Status;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

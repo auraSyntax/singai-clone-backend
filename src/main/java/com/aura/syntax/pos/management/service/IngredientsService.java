@@ -1,14 +1,11 @@
 package com.aura.syntax.pos.management.service;
 
-import com.aura.syntax.pos.management.api.dto.IngredientsDto;
-import com.aura.syntax.pos.management.api.dto.MainCategoryDto;
+import com.aura.syntax.pos.management.api.dto.StockDto;
 import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
 import com.aura.syntax.pos.management.api.dto.ResponseDto;
-import com.aura.syntax.pos.management.entity.Ingredients;
-import com.aura.syntax.pos.management.entity.MainCategories;
-import com.aura.syntax.pos.management.enums.Status;
+import com.aura.syntax.pos.management.entity.Stock;
 import com.aura.syntax.pos.management.exception.ServiceException;
-import com.aura.syntax.pos.management.repository.IngredientsRepository;
+import com.aura.syntax.pos.management.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,33 +20,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IngredientsService {
 
-    private final IngredientsRepository ingredientsRepository;
+    private final StockRepository stockRepository;
 
-    public ResponseDto addIngredient(IngredientsDto ingredientsDto) {
-        Ingredients ingredients = Ingredients.builder()
-                .id(ingredientsDto.getId())
-                .name(ingredientsDto.getName())
-                .currentStock(ingredientsDto.getCurrentStock())
-                .minimumStock(ingredientsDto.getMinimumStock())
-                .unit(ingredientsDto.getUnit())
-                .costPerUnit(ingredientsDto.getCostPerUnit())
+    public ResponseDto addStock(StockDto stockDto) {
+        Stock stock = Stock.builder()
+                .id(stockDto.getId())
+                .stockName(stockDto.getStockName())
+                .currentStock(stockDto.getCurrentStock())
+                .minimumStock(stockDto.getMinimumStock())
+                .unit(stockDto.getUnit())
+                .costPerUnit(stockDto.getCostPerUnit())
                 .createdAt(LocalDateTime.now())
+                .isActive(stockDto.isActive())
                 .build();
 
-        ingredientsRepository.save(ingredients);
+        stockRepository.save(stock);
 
         return new ResponseDto("Ingredient saved");
     }
 
-    public List<IngredientsDto> getAllIngredients() {
-        return ingredientsRepository.getAllIngredients();
+    public List<StockDto> getAllStocks() {
+        return stockRepository.getAllStock();
     }
 
-    public PaginatedResponseDto<IngredientsDto> getAllIngredientsPagination(Integer page, Integer size, String search) {
+    public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search) {
         Pageable pageable = PageRequest.of(page - 1,size);
-        Page<IngredientsDto> ingredientsDtos = ingredientsRepository.getAllIngredientsPagination(pageable,search);
-        PaginatedResponseDto<IngredientsDto> ingredientsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
-        List<IngredientsDto> ingredientsDtosContent = ingredientsDtos.getContent();
+        Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable,search);
+        PaginatedResponseDto<StockDto> ingredientsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
+        List<StockDto> ingredientsDtosContent = ingredientsDtos.getContent();
         ingredientsDtoPaginatedResponseDto.setData(ingredientsDtosContent);
         ingredientsDtoPaginatedResponseDto.setCurrentPage(page);
         ingredientsDtoPaginatedResponseDto.setTotalPages(ingredientsDtos.getTotalPages());
@@ -58,37 +56,38 @@ public class IngredientsService {
         return ingredientsDtoPaginatedResponseDto;
     }
 
-    public IngredientsDto getIngredientById(Long id) {
-        Ingredients ingredients = ingredientsRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Ingredient not found","Bad request", HttpStatus.BAD_REQUEST));
-        return IngredientsDto.builder()
-                .id(ingredients.getId())
-                .name(ingredients.getName())
-                .currentStock(ingredients.getCurrentStock())
-                .minimumStock(ingredients.getMinimumStock())
-                .unit(ingredients.getUnit())
-                .costPerUnit(ingredients.getCostPerUnit())
+    public StockDto getStockById(Long id) {
+        Stock stock = stockRepository.findById(id).orElseThrow(() -> new
+                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+        return StockDto.builder()
+                .id(stock.getId())
+                .stockName(stock.getStockName())
+                .currentStock(stock.getCurrentStock())
+                .minimumStock(stock.getMinimumStock())
+                .unit(stock.getUnit())
+                .costPerUnit(stock.getCostPerUnit())
+                .isActive(stock.isActive())
                 .build();
     }
 
-    public ResponseDto deleteIngredient(Long id) {
-        Ingredients ingredients = ingredientsRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Ingredient not found","Bad request", HttpStatus.BAD_REQUEST));
-        ingredientsRepository.deleteById(id);
-        return new ResponseDto("Ingredient deleted successfully");
+    public ResponseDto deleteStock(Long id) {
+        Stock stock = stockRepository.findById(id).orElseThrow(() -> new
+                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+        stockRepository.deleteById(id);
+        return new ResponseDto("Stock deleted successfully");
     }
 
-    public ResponseDto updateIngredient(IngredientsDto ingredientsDto) {
-        Ingredients ingredients = ingredientsRepository.findById(ingredientsDto.getId()).orElseThrow(() -> new
-                ServiceException("Ingredient not found","Bad request", HttpStatus.BAD_REQUEST));
-        ingredients.setId(ingredientsDto.getId());
-        ingredients.setName(ingredientsDto.getName());
-        ingredients.setCurrentStock(ingredientsDto.getCurrentStock());
-        ingredients.setMinimumStock(ingredientsDto.getMinimumStock());
-        ingredients.setUnit(ingredientsDto.getUnit());
-        ingredients.setCostPerUnit(ingredientsDto.getCostPerUnit());
-        ingredients.setUpdatedAt(LocalDateTime.now());
-        ingredientsRepository.save(ingredients);
-        return new ResponseDto("Ingredient updated successfully");
+    public ResponseDto updateStock(StockDto ingredientsDto) {
+        Stock stock = stockRepository.findById(ingredientsDto.getId()).orElseThrow(() -> new
+                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+        stock.setId(ingredientsDto.getId());
+        stock.setStockName(ingredientsDto.getStockName());
+        stock.setCurrentStock(ingredientsDto.getCurrentStock());
+        stock.setMinimumStock(ingredientsDto.getMinimumStock());
+        stock.setUnit(ingredientsDto.getUnit());
+        stock.setCostPerUnit(ingredientsDto.getCostPerUnit());
+        stock.setUpdatedAt(LocalDateTime.now());
+        stockRepository.save(stock);
+        return new ResponseDto("Stock updated successfully");
     }
 }

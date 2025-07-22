@@ -2,7 +2,7 @@ package com.aura.syntax.pos.management.service;
 
 import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.entity.Categories;
-import com.aura.syntax.pos.management.entity.MenuItemIncredients;
+import com.aura.syntax.pos.management.entity.MenuItemStock;
 import com.aura.syntax.pos.management.entity.MenuItems;
 import com.aura.syntax.pos.management.enums.Status;
 import com.aura.syntax.pos.management.exception.ServiceException;
@@ -41,7 +41,7 @@ public class MenuItemsService {
                 .description(menuItemsDto.getDescription())
                 .preparationTime(menuItemsDto.getPreparationTime())
                 .price(menuItemsDto.getPrice())
-                .menuItemIncredients(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
+                .menuItemStocks(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
                         menuItemsDto.getMenuItemIncredientsDtos().stream()
                                 .map(this::saveMenuItemIncredients)
                                 .collect(Collectors.toSet()) : null)
@@ -53,12 +53,12 @@ public class MenuItemsService {
         return new ResponseDto("Menu Item Saved");
     }
 
-    private MenuItemIncredients saveMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto) {
-        return MenuItemIncredients.builder()
+    private MenuItemStock saveMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto) {
+        return MenuItemStock.builder()
                 .id(menuItemIncredientsDto.getId())
                 .menuItemsId(menuItemIncredientsDto.getMenuItemsId())
                 .createdAt(LocalDateTime.now())
-                .ingredientsId(menuItemIncredientsDto.getIngredientsId())
+                .stockId(menuItemIncredientsDto.getIngredientsId())
                 .quantityRequired(menuItemIncredientsDto.getQuantityRequired())
                 .unit(menuItemIncredientsDto.getUnit())
                 .build();

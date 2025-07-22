@@ -1,35 +1,32 @@
 package com.aura.syntax.pos.management.api.dto;
 
-import com.aura.syntax.pos.management.entity.MenuItemIncredients;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IngredientsDto {
+public class StockDto {
     private Long id;
-    private String name;
-    private String unit;
-    private Integer currentStock;
-    private Integer minimumStock;
+    private String stockName;
+    private Double currentStock;
+    private Double minimumStock;
     private Double costPerUnit;
+    private String unit;
+    private boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    Set<MenuItemIncredients> menuItemIncredients;
 
-    public IngredientsDto(Long id, String name, String unit, Integer currentStock, Integer minimumStock, Double costPerUnit) {
+    public StockDto(Long id, String stockName, String unit, Double currentStock, Double minimumStock, Double costPerUnit) {
         this.id = id;
-        this.name = name;
+        this.stockName = stockName;
         this.unit = unit;
         this.currentStock = currentStock;
         this.minimumStock = minimumStock;
