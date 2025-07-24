@@ -9,11 +9,4 @@ import java.util.Optional;
 
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
     Optional<RefreshToken> findByToken(String token);
-
-    void deleteByUser_Id(Long userId);
-
-    @Query("SELECT r.id " +
-           "FROM RefreshToken r " +
-           "WHERE r.userId = :id")
-    List<String> getAllRefreshTokenByUserId(Long id);
 }
