@@ -7,15 +7,20 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class MenuItemIncredientsDto {
+public class OrderItemsDto {
     private Long id;
+    private Long orderId;
     private Long menuItemsId;
-    private Long stockId;
-    private Integer quantityRequired;
-    private String unit;
+    private Integer quantity;
+    private Double unitPrice;
+    private Double totalPrice;
+    private String status;
+    private String specialInstructions;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

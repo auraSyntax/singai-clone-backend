@@ -7,6 +7,7 @@ import com.aura.syntax.pos.management.entity.MenuItems;
 import com.aura.syntax.pos.management.enums.Status;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.CategoryRepository;
+import com.aura.syntax.pos.management.repository.MenuItemStockRepository;
 import com.aura.syntax.pos.management.repository.MenuItemsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,8 @@ public class MenuItemsService {
     private final MenuItemsRepository menuItemsRepository;
 
     private final CategoryRepository categoryRepository;
+
+    private final MenuItemStockRepository menuItemStockRepository;
 
     public ResponseDto addMenuItem(MenuItemsDto menuItemsDto) {
         Categories categories = categoryRepository.findById(menuItemsDto.getCategoryId()).orElseThrow(() -> new
@@ -58,7 +61,7 @@ public class MenuItemsService {
                 .id(menuItemIncredientsDto.getId())
                 .menuItemsId(menuItemIncredientsDto.getMenuItemsId())
                 .createdAt(LocalDateTime.now())
-                .stockId(menuItemIncredientsDto.getIngredientsId())
+                .stockId(menuItemIncredientsDto.getStockId())
                 .quantityRequired(menuItemIncredientsDto.getQuantityRequired())
                 .unit(menuItemIncredientsDto.getUnit())
                 .build();
@@ -115,10 +118,28 @@ public class MenuItemsService {
         existingMenuItem.setCategoryId(menuItemsDto.getCategoryId());
         existingMenuItem.setImageUrl(menuItemsDto.getImageUrl());
         existingMenuItem.setPreparationTime(menuItemsDto.getPreparationTime());
+        existingMenuItem.setMenuItemStocks(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
+                menuItemsDto.getMenuItemIncredientsDtos().stream()
+                        .map(menuItemIncredientsDto -> {
+                            MenuItemStock existingMenuItemStock = menuItemStockRepository.findById(menuItemIncredientsDto.getId())
+                                    .orElseThrow(() -> new ServiceException("Menu item stock not found","Bad request",HttpStatus.BAD_REQUEST));
+                            updateMenuItemIncredients(menuItemIncredientsDto,existingMenuItemStock);
 
+                            return existingMenuItemStock;
+                        })
+                        .collect(Collectors.toSet()) : null);
         menuItemsRepository.save(existingMenuItem);
 
         return new ResponseDto("Menu Item updated successfully");
+    }
+
+    private MenuItemStock updateMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto,MenuItemStock menuItemStock) {
+        menuItemStock.setId(menuItemIncredientsDto.getId());
+        menuItemStock.setMenuItemsId(menuItemIncredientsDto.getMenuItemsId());
+        menuItemStock.setUnit(menuItemIncredientsDto.getUnit());
+        menuItemStock.setStockId(menuItemIncredientsDto.getStockId());
+        menuItemStock.setQuantityRequired(menuItemIncredientsDto.getQuantityRequired());
+        return menuItemStock;
     }
 
     public ResponseDto updateStatus(Long id, String status) {

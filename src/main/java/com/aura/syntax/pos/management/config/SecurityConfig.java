@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/auth/**",
-                                "/api/v1/role/**"
+                                "/api/v1/role/**",
+                                "/api/v1/file-upload/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

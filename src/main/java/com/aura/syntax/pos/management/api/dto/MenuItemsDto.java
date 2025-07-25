@@ -28,7 +28,7 @@ public class MenuItemsDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Set<MenuItemIncredientsDto> menuItemIncredientsDtos;
-    private Set<OrderItems> orderItems;
+    private Set<OrderItemsDto> orderItemsDtos;
     private String categoryName;
 
     public MenuItemsDto(Long id, String name, String description, Double price, String imageUrl, Integer preparationTime, Status status,Long categoryId) {

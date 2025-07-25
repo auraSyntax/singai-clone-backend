@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/FileUploadController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/config/CloudinaryConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/FileUploadService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,7 +221,31 @@
       <option name="project" value="LOCAL" />
       <updated>1753201066883</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1753253087714</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753253087714</updated>
+    </task>
+    <task id="LOCAL-00013" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1753373695942</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753373695942</updated>
+    </task>
+    <task id="LOCAL-00014" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1753374213104</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753374213104</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
