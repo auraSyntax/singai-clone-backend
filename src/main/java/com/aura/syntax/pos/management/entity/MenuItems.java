@@ -32,7 +32,4 @@ public class MenuItems {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "menuItemsId")
     private Set<MenuItemStock> menuItemStocks;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "menuItemsId")
-    private Set<OrderItems> orderItems;
 }

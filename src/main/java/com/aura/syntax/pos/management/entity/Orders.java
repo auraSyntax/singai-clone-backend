@@ -30,6 +30,7 @@ public class Orders {
     private OrderStatus orderStatus;
     private Double subTotal;
     private Double taxAmount;
+    private Double discountAmount;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @Enumerated(EnumType.STRING)

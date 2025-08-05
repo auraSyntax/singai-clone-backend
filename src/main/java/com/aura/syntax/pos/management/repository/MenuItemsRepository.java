@@ -24,4 +24,8 @@ public interface MenuItemsRepository extends JpaRepository<MenuItems,Long> {
            "AND :categoryId IS NULL OR m.categoryId = :categoryId " +
            "ORDER BY m.createdAt")
     Page<MenuItemsDto> getAllMenuItemsPagination(Pageable pageable, String search, Long categoryId);
+
+    @Query("SELECT m.name FROM MenuItems m " +
+           "WHERE m.id = :menuItemsId")
+    String getMenuItemById(Long menuItemsId);
 }

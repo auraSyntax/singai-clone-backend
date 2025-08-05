@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
            "FROM User u " +
            "WHERE :search IS NULL OR CONCAT(u.firstName, ' ', u.lastName) LIKE %:search%")
     List<UserDto> getListOfUsers(String search);
+
+    @Query("SELECT CONCAT(u.firstName,' ',u.lastName) FROM User u WHERE u.id = :waiterId")
+    String getNameById(Long waiterId);
 }

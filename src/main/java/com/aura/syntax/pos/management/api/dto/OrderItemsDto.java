@@ -1,5 +1,7 @@
 package com.aura.syntax.pos.management.api.dto;
 
+import com.aura.syntax.pos.management.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderItemsDto {
     private Long id;
     private Long orderId;
@@ -23,4 +26,13 @@ public class OrderItemsDto {
     private String specialInstructions;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String menuItemName;
+
+    public OrderItemsDto(Long id, Long menuItemsId, Integer quantity, String specialInstructions, OrderStatus orderStatus) {
+        this.id = id;
+        this.menuItemsId = menuItemsId;
+        this.quantity = quantity;
+        this.specialInstructions = specialInstructions;
+        this.status = orderStatus.getMappedValue();
+    }
 }

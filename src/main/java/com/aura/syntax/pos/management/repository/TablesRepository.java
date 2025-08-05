@@ -20,4 +20,7 @@ public interface TablesRepository extends JpaRepository<Tables,Long> {
            "FROM Tables t " +
            "WHERE :search IS NULL OR t.tableNumber = :search")
     List<TableDto> getListOfTables(String search);
+
+    @Query("SELECT t.tableNumber FROM Tables t WHERE t.id = :tableId")
+    String getTableNameById(Long tableId);
 }
