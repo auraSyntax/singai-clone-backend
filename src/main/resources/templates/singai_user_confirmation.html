@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Singai</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #4B0082; /* Purple */
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 200px;
+        }
+        .content {
+            padding: 30px 20px;
+            color: #333;
+        }
+        .content h1 {
+            color: #4B0082;
+        }
+        .credentials {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #FFF9E5;
+            border-left: 5px solid #FFD700; /* Yellow */
+        }
+        .footer {
+            background-color: #4B0082;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .content, .header, .footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="email-container">
+    <div class="header">
+        <img src="https://res.cloudinary.com/dhqv3pfgi/image/upload/v1754410424/SAVE_20250805_212715-removebg-preview_nk5tmc.png" alt="Singai Logo" />
+    </div>
+
+    <div class="content">
+        <h1>Welcome to Singai Restaurant!</h1>
+        <p>Hi <strong th:text="${userName}">User Name</strong>,</p>
+
+        <p>We’re thrilled to have you on board! Your account has been successfully created. You can now log in using the credentials below:</p>
+
+        <div class="credentials">
+            <p><strong>Username:</strong> <span th:text="${email}">username@example.com</span></p>
+            <p><strong>Password:</strong> <span th:text="${password}">••••••••</span></p>
+        </div>
+
+        <p>For your security, please change your password after logging in.</p>
+        <p>We hope you enjoy your experience with Singai. If you have any questions, feel free to contact our support team.</p>
+
+        <p>Welcome aboard, and we’re excited to have you with us!<br>– The Singai Team</p>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Singai Restaurant. All rights reserved.
+    </div>
+</div>
+
+</body>
+</html>
