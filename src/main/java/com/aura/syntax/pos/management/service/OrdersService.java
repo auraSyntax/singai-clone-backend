@@ -121,6 +121,7 @@ public class OrdersService {
                 .id(orderItems.getId())
                 .orderId(orderItems.getOrderId())
                 .menuItemsId(orderItems.getMenuItemsId())
+                .menuItemName(menuItemsRepository.getMenuItemById(orderItems.getMenuItemsId()))
                 .quantity(orderItems.getQuantity())
                 .specialInstructions(orderItems.getSpecialInstructions())
                 .createdAt(LocalDateTime.now())
