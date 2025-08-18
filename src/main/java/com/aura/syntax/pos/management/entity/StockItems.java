@@ -1,5 +1,6 @@
 package com.aura.syntax.pos.management.entity;
 
+import com.aura.syntax.pos.management.enums.Type;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,25 +8,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Stock {
+public class StockItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dateTime;
-    private Double total;
-    private String invoiceNumber;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "stockId")
-    private Set<StockItems> stockItems;
+    private Long productId;
+    private Integer quantity;
+    private Double costPerUnit;
+    private String unit;
+    private Double salesPrice;
+    private Double retailPrice;
+    private Long menuItemId;
     private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
 }

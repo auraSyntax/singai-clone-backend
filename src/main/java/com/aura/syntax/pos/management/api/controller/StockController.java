@@ -3,7 +3,7 @@ package com.aura.syntax.pos.management.api.controller;
 import com.aura.syntax.pos.management.api.dto.StockDto;
 import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
 import com.aura.syntax.pos.management.api.dto.ResponseDto;
-import com.aura.syntax.pos.management.service.IngredientsService;
+import com.aura.syntax.pos.management.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,37 +15,37 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:5173"})
 public class StockController {
 
-    private final IngredientsService ingredientsService;
+    private final StockService stockService;
 
     @PostMapping
     public ResponseDto addStock(@RequestBody StockDto stockDto){
-        return ingredientsService.addStock(stockDto);
+        return stockService.addStock(stockDto);
     }
 
     @GetMapping("/list")
     public List<StockDto> getAllIngredients(){
-        return ingredientsService.getAllStocks();
+        return stockService.getAllStocks();
     }
 
     @GetMapping("/get-all")
     public PaginatedResponseDto<StockDto> getAllStocksPagination(@RequestParam(value = "page") Integer page,
                                                                       @RequestParam(value = "size") Integer size,
                                                                       @RequestParam(value = "search",required = false) String search){
-        return ingredientsService.getAllStocksPagination(page,size,search);
+        return stockService.getAllStocksPagination(page,size,search);
     }
 
     @GetMapping("/get-by-id")
     public StockDto getStockById(@RequestParam(value = "id") Long id){
-        return ingredientsService.getStockById(id);
+        return stockService.getStockById(id);
     }
 
     @PutMapping
     public ResponseDto updateStock(@RequestBody StockDto ingredientsDto){
-        return ingredientsService.updateStock(ingredientsDto);
+        return stockService.updateStock(ingredientsDto);
     }
 
     @DeleteMapping
     public ResponseDto deleteStock(@RequestParam(value = "id") Long id){
-        return ingredientsService.deleteStock(id);
+        return stockService.deleteStock(id);
     }
 }

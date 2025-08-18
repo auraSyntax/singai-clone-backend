@@ -11,12 +11,11 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Stock,Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(i.id,i.stockName,i.unit,i.currentStock,i.minimumStock,i.costPerUnit,i.isActive) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(i.id,i.isActive) " +
            "FROM Stock i ")
     List<StockDto> getAllStock();
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(i.id,i.stockName,i.unit,i.currentStock,i.minimumStock,i.costPerUnit,i.isActive) " +
-           "FROM Stock i " +
-           "WHERE :search IS NULL OR LOWER(i.stockName) LIKE LOWER(CONCAT('%', :search, '%')) ")
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(i.id,i.isActive) " +
+           "FROM Stock i ")
     Page<StockDto> getAllStockPagination(Pageable pageable, String search);
 }

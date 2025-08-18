@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -15,21 +16,14 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StockDto {
     private Long id;
-    private String stockName;
-    private Double currentStock;
-    private Double minimumStock;
-    private Double costPerUnit;
-    private String unit;
-    private boolean isActive;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime dateTime;
+    private Double total;
+    private String invoiceNumber;
+    private Boolean isActive;
+    private Set<StockItemsDto> stockItemsDtos;
 
-    public StockDto(Long id, String stockName, String unit, Double currentStock, Double minimumStock, Double costPerUnit) {
+    public StockDto(Long id, Boolean isActive) {
         this.id = id;
-        this.stockName = stockName;
-        this.unit = unit;
-        this.currentStock = currentStock;
-        this.minimumStock = minimumStock;
-        this.costPerUnit = costPerUnit;
+        this.isActive = isActive;
     }
 }

@@ -5,28 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/EmailDataDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/config/QueueConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/exception/EmailProcessingException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/queue/Queue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/queue/QueueListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/queue/QueueMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/EmailData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/EmailNotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/factory/ContextFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/factory/QueueMessageFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/listener/EmailSenderQueueListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/support/EmailSender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/support/TemplateEngineProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/support/TemplateResolver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/singai_user_confirmation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/ProductDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/StockItemsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/StockItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/enums/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/StockItemRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/StockService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/FileUploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/FileUploadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/FileUploadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/FileUploadService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/StockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/StockDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/StockDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/Stock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/entity/Stock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/StockRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/StockRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/IngredientsService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +30,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -75,21 +69,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.PosManagementApplication.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Maven.singai_pos_management [clean,install].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/service",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.PosManagementApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Maven.singai_pos_management [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/service&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\service" />
@@ -102,11 +96,11 @@
       <recent name="com.aura.syntax.pos.management.api.controller.advice" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.aura.syntax.pos.management.api.dto" />
+      <recent name="com.aura.syntax.pos.management.entity" />
+      <recent name="com.aura.syntax.pos.management.enums" />
       <recent name="com.aura.syntax.pos.management.config" />
       <recent name="com.aura.syntax.pos.management.exception" />
-      <recent name="com.aura.syntax.pos.management.service" />
-      <recent name="com.aura.syntax.pos.management.api.dto" />
-      <recent name="com.aura.syntax.pos.management.repository" />
     </key>
   </component>
   <component name="RunManager">
@@ -279,7 +273,23 @@
       <option name="project" value="LOCAL" />
       <updated>1754397107281</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1754412772960</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1754412772960</updated>
+    </task>
+    <task id="LOCAL-00018" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1754473391118</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1754473391118</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
