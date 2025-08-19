@@ -41,10 +41,10 @@ public class OrdersDto {
         this.orderNumber = orderNumber;
         this.tableId = tableId;
         this.waiterId = waiterId;
-        this.orderType = orderType.getMappedValue();
-        this.orderStatus = orderStatus.getMappedValue();
-        this.paymentMethod = paymentMethod.getMappedValue();
-        this.paymentStatus = paymentStatus.getMappedValue();
+        this.orderType = orderType != null ? orderType.getMappedValue() : null;
+        this.orderStatus = orderStatus != null ? orderStatus.getMappedValue() : null;
+        this.paymentMethod = paymentMethod != null ? paymentMethod.getMappedValue() : null;
+        this.paymentStatus = paymentStatus != null ? paymentStatus.getMappedValue() : null;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
         this.notes = notes;

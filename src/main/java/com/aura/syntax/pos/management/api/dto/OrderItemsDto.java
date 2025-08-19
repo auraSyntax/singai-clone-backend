@@ -33,6 +33,6 @@ public class OrderItemsDto {
         this.menuItemsId = menuItemsId;
         this.quantity = quantity;
         this.specialInstructions = specialInstructions;
-        this.status = orderStatus.getMappedValue();
+        this.status = orderStatus != null ? orderStatus.getMappedValue() : null;
     }
 }

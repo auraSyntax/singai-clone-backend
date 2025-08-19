@@ -101,12 +101,15 @@ public class OrdersService {
                 .waiterId(orders.getWaiterId())
                 .customerName(orders.getCustomerName())
                 .customerPhone(orders.getCustomerPhone())
-                .orderType(orders.getOrderType().getMappedValue())
-                .orderStatus(orders.getOrderStatus().getMappedValue())
+                .orderType(orders.getOrderType() != null ? orders.getOrderType().getMappedValue() : null)
+                .orderStatus(orders.getOrderStatus() != null ?
+                        orders.getOrderStatus().getMappedValue() : null)
                 .taxAmount(orders.getTaxAmount())
                 .discountAmount(orders.getDiscountAmount())
-                .paymentStatus(orders.getPaymentStatus().getMappedValue())
-                .paymentStatus(orders.getPaymentStatus().getMappedValue())
+                .paymentStatus(orders.getPaymentStatus() != null ?
+                        orders.getPaymentStatus().getMappedValue() : null)
+                .paymentStatus(orders.getPaymentStatus() != null ?
+                        orders.getPaymentStatus().getMappedValue() : null)
                 .notes(orders.getNotes())
                 .orderItemsDtos(orders.getOrderItems() != null && !orders.getOrderItems().isEmpty() ?
                         orders.getOrderItems().stream()
