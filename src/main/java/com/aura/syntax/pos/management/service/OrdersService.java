@@ -133,10 +133,10 @@ public class OrdersService {
                 .build();
     }
 
-    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus) {
+    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus,String search) {
         Pageable pageable = PageRequest.of(page - 1,size);
         Page<OrdersDto> ordersDtos = ordersRepository.getAllOrdersPagination(pageable,waiterId,orderType != null && !orderType.isEmpty() ?
-                OrderType.fromMappedValue(orderType) : null,orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null);
+                OrderType.fromMappedValue(orderType) : null,orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null,search);
 
         List<OrdersDto> ordersDtoList = ordersDtos.getContent();
         ordersDtoList.stream().forEach(ordersDto -> {

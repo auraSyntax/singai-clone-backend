@@ -16,12 +16,17 @@ import java.util.Set;
 
 public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id,o.orderNumber,o.tableId,o.waiterId,o.orderType,o.orderStatus,o.paymentMethod,o.paymentStatus,o.customerName,o.customerPhone,o.notes) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes) " +
            "FROM Orders o " +
-           "WHERE :waiterId IS NULL OR o.waiterId = :waiterId " +
-           "AND :orderType IS NULL OR o.orderType = :orderType " +
-           "AND :orderStatus IS NULL OR o.orderStatus = :orderStatus")
-    Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus);
+           "WHERE (:waiterId IS NULL OR o.waiterId = :waiterId) " +
+           "AND (:orderType IS NULL OR o.orderType = :orderType) " +
+           "AND (:orderStatus IS NULL OR o.orderStatus = :orderStatus) " +
+           "AND (:search IS NULL OR (" +
+           "    LOWER(o.orderNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "    LOWER(o.customerName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "    LOWER(o.customerPhone) LIKE LOWER(CONCAT('%', :search, '%'))" +
+           "))")
+    Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus,String search);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.menuItemsId,oi.quantity,oi.specialInstructions,oi.status) " +
            "FROM OrderItems oi " +

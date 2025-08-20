@@ -30,8 +30,9 @@ public class OrdersController {
                                                                  @RequestParam(value = "size") Integer size,
                                                                  @RequestParam(value = "waiterId",required = false) Long waiterId,
                                                                  @RequestParam(value = "orderType",required = false) String orderType,
-                                                                 @RequestParam(value = "orderStatus",required = false) String orderStatus){
-        return ordersService.getAllOrdersPagination(page,size,waiterId,orderType,orderStatus);
+                                                                 @RequestParam(value = "orderStatus",required = false) String orderStatus,
+                                                                  @RequestParam(value = "search",required = false) String search){
+        return ordersService.getAllOrdersPagination(page,size,waiterId,orderType,orderStatus,search);
     }
 
     @PutMapping
