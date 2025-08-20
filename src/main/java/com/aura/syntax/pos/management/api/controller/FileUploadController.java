@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/file-upload")
@@ -37,5 +38,11 @@ public class FileUploadController {
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image");
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, String>> deleteFile(@RequestParam(value = "url") String url) {
+        String message = fileUploadService.deleteFile(url);
+        return ResponseEntity.ok(Collections.singletonMap("message", message));
     }
 }
