@@ -16,7 +16,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrdersDto {
     private Long id;
     private Long tableId;
@@ -36,7 +35,9 @@ public class OrdersDto {
     private String tableName;
     private String waiterName;
 
-    public OrdersDto(Long id, String orderNumber, Long tableId, Long waiterId, OrderType orderType, OrderStatus orderStatus, PaymentMethod paymentMethod, PaymentStatus paymentStatus, String customerName, String customerPhone, String notes) {
+    public OrdersDto(Long id, String orderNumber, Long tableId, Long waiterId, OrderType orderType, OrderStatus orderStatus,
+                     PaymentMethod paymentMethod, PaymentStatus paymentStatus, String customerName, String customerPhone, String notes, Double subTotal,
+                     Double taxAmount, Double discountAmount, String tableName, String waiterName) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.tableId = tableId;
@@ -48,5 +49,10 @@ public class OrdersDto {
         this.customerName = customerName;
         this.customerPhone = customerPhone;
         this.notes = notes;
+        this.subTotal = subTotal;
+        this.taxAmount = taxAmount;
+        this.discountAmount = discountAmount;
+        this.tableName = tableName;
+        this.waiterName = waiterName;
     }
 }

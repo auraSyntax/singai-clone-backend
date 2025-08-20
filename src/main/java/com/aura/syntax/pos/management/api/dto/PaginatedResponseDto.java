@@ -10,4 +10,7 @@ public class PaginatedResponseDto<T> {
     private List<T> data;
     private int totalPages;
     private int currentPage;
+    private int pageSize;
+    private boolean hasNext;
+    private boolean hasPrevious;
 }

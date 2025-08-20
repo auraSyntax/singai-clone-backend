@@ -4,14 +4,16 @@ import com.aura.syntax.pos.management.api.dto.OrderItemsDto;
 import com.aura.syntax.pos.management.api.dto.OrdersDto;
 import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
 import com.aura.syntax.pos.management.api.dto.ResponseDto;
-import com.aura.syntax.pos.management.entity.Categories;
-import com.aura.syntax.pos.management.entity.MenuItems;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
-import com.aura.syntax.pos.management.enums.*;
+import com.aura.syntax.pos.management.enums.OrderStatus;
+import com.aura.syntax.pos.management.enums.OrderType;
+import com.aura.syntax.pos.management.enums.PaymentMethod;
+import com.aura.syntax.pos.management.enums.PaymentStatus;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +41,9 @@ public class OrdersService {
     private final UserRepository userRepository;
     private final MenuItemsRepository menuItemsRepository;
     private final OrderItemsRepository orderItemsRepository;
+
+    @Value("${cloudinary.base.url}")
+    private String imagePath;
 
     public ResponseDto addOrder(OrdersDto ordersDto) {
         Orders orders = Orders.builder()
@@ -93,7 +98,7 @@ public class OrdersService {
     }
 
     public OrdersDto getOrderById(Long id) {
-        Orders orders = ordersRepository.findById(id).orElseThrow(() -> new ServiceException("Order not found","Bad request", HttpStatus.BAD_REQUEST));
+        Orders orders = ordersRepository.findById(id).orElseThrow(() -> new ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
         return OrdersDto.builder()
                 .id(orders.getId())
                 .orderNumber(orders.getOrderNumber())
@@ -133,19 +138,16 @@ public class OrdersService {
                 .build();
     }
 
-    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus,String search) {
-        Pageable pageable = PageRequest.of(page - 1,size);
-        Page<OrdersDto> ordersDtos = ordersRepository.getAllOrdersPagination(pageable,waiterId,orderType != null && !orderType.isEmpty() ?
-                OrderType.fromMappedValue(orderType) : null,orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null,search);
+    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus, String search) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<OrdersDto> ordersDtos = ordersRepository.getAllOrdersPagination(pageable, waiterId, orderType != null && !orderType.isEmpty() ?
+                OrderType.fromMappedValue(orderType) : null, orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null, search);
 
         List<OrdersDto> ordersDtoList = ordersDtos.getContent();
         ordersDtoList.stream().forEach(ordersDto -> {
-            ordersDto.setTableName(tablesRepository.getTableNameById(ordersDto.getTableId()));
-            ordersDto.setWaiterName(userRepository.getNameById(ordersDto.getWaiterId()));
-
             Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId());
             orderItemsDtos.stream().forEach(orderItemsDto -> {
-                orderItemsDto.setMenuItemName(menuItemsRepository.getMenuItemById(orderItemsDto.getMenuItemsId()));
+                orderItemsDto.setImageUrl(orderItemsDto.getImageUrl() != null ? imagePath + orderItemsDto.getImageUrl() : null);
             });
             ordersDto.setOrderItemsDtos(orderItemsDtos);
         });
@@ -154,7 +156,9 @@ public class OrdersService {
         ordersDtoPaginatedResponseDto.setCurrentPage(page);
         ordersDtoPaginatedResponseDto.setTotalItems(ordersDtos.getTotalElements());
         ordersDtoPaginatedResponseDto.setTotalPages(ordersDtos.getTotalPages());
-
+        ordersDtoPaginatedResponseDto.setPageSize(size);
+        ordersDtoPaginatedResponseDto.setHasPrevious(page > 1);
+        ordersDtoPaginatedResponseDto.setHasNext(page < ordersDtos.getTotalPages());
         return ordersDtoPaginatedResponseDto;
     }
 
@@ -206,9 +210,9 @@ public class OrdersService {
 
     public ResponseDto updateOrderStatus(Long id, String status) {
         Orders orders = ordersRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Order not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
 
-        if (status.equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())){
+        if (status.equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
             Set<OrderItems> orderItems = ordersRepository.getAllOrderItemsByOrderId(orders.getId());
             orderItems.stream().forEach(orderItemsDto -> {
                 orderItemsDto.setStatus(OrderStatus.PREPARING);
@@ -222,7 +226,7 @@ public class OrdersService {
 
     public ResponseDto updatePaymentStatus(Long id, String status) {
         Orders orders = ordersRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Order not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
 
         orders.setPaymentStatus(PaymentStatus.fromMappedValue(status));
         ordersRepository.save(orders);
@@ -231,7 +235,7 @@ public class OrdersService {
 
     public ResponseDto deleteOrder(Long id) {
         Orders orders = ordersRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Order not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
         ordersRepository.deleteById(id);
         return new ResponseDto("Order deleted successfully");
     }
