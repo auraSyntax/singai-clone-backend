@@ -31,7 +31,7 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
     Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus,String search);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.menuItemsId,oi.quantity,oi.specialInstructions,oi.status,m.name, " +
-           "oi.unitPrice, oi.totalPrice,oi.createdAt,oi.updatedAt,m.price,m.imageUrl,m.preparationTime) " +
+           "oi.unitPrice, oi.totalPrice,oi.createdAt,oi.updatedAt,m.price,m.imageUrl,m.preparationTime,oi.isRetail) " +
            "FROM OrderItems oi " +
            "LEFT JOIN MenuItems m ON oi.menuItemsId = m.id " +
            "WHERE oi.orderId = :id")

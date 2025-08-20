@@ -80,6 +80,7 @@ public class OrdersService {
                 .unitPrice(orderItemsDto.getUnitPrice())
                 .totalPrice(orderItemsDto.getTotalPrice())
                 .status(OrderStatus.PENDING)
+                .isRetail(orderItemsDto.getIsRetail())
                 .build();
     }
 
@@ -135,6 +136,7 @@ public class OrdersService {
                 .createdAt(LocalDateTime.now())
                 .unitPrice(orderItems.getUnitPrice())
                 .totalPrice(orderItems.getTotalPrice())
+                .isRetail(orderItems.getIsRetail())
                 .build();
     }
 
@@ -178,6 +180,7 @@ public class OrdersService {
         existingOrder.setPaymentMethod(PaymentMethod.fromMappedValue(ordersDto.getPaymentMethod()));
         existingOrder.setNotes(ordersDto.getNotes());
         existingOrder.setUpdatedAt(LocalDateTime.now());
+        existingOrder.setUpdatedAt(LocalDateTime.now());
 
         if (ordersDto.getOrderItemsDtos() != null && !ordersDto.getOrderItemsDtos().isEmpty()) {
             Set<OrderItems> orderItems = ordersDto.getOrderItemsDtos().stream()
@@ -203,6 +206,7 @@ public class OrdersService {
         existingOrderItem.setStatus(orderItemsDto.getStatus() != null && !orderItemsDto.getStatus().isEmpty() ?
                 OrderStatus.fromMappedValue(orderItemsDto.getStatus()) : null);
         existingOrderItem.setUpdatedAt(LocalDateTime.now());
+        existingOrderItem.setIsRetail(orderItemsDto.getIsRetail());
 
         return existingOrderItem;
     }

@@ -28,4 +28,5 @@ public class OrderItems {
     private String specialInstructions;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Boolean isRetail;
 }
