@@ -23,6 +23,7 @@ public class MenuItemsDto {
     private Double price;
     private Long categoryId;
     private String imageUrl;
+    private String imageUrlWithDomain;
     private Integer preparationTime;
     private String status;
     private LocalDateTime createdAt;

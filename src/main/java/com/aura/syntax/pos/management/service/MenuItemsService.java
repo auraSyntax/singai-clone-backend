@@ -10,6 +10,7 @@ import com.aura.syntax.pos.management.repository.CategoryRepository;
 import com.aura.syntax.pos.management.repository.MenuItemStockRepository;
 import com.aura.syntax.pos.management.repository.MenuItemsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,9 @@ public class MenuItemsService {
     private final CategoryRepository categoryRepository;
 
     private final MenuItemStockRepository menuItemStockRepository;
+
+    @Value("${cloudinary.base.url}")
+    private String imagePath;
 
     public ResponseDto addMenuItem(MenuItemsDto menuItemsDto) {
         Categories categories = categoryRepository.findById(menuItemsDto.getCategoryId()).orElseThrow(() -> new
@@ -72,6 +76,7 @@ public class MenuItemsService {
         List<MenuItemsDto> menuItemsDtoList = menuItemsRepository.getAllMenuItems(categoryId);
         menuItemsDtoList.stream().forEach(menuItemsDto -> {
             menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
+            menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
         });
 
         return menuItemsDtoList;
@@ -84,6 +89,7 @@ public class MenuItemsService {
         List<MenuItemsDto> menuItemsDtoList = menuItemsDtos.getContent();
         menuItemsDtoList.stream().forEach(menuItemsDto -> {
             menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
+            menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
         });
         menuItemsDtoPaginatedResponseDto.setData(menuItemsDtoList);
         menuItemsDtoPaginatedResponseDto.setCurrentPage(page);
@@ -102,6 +108,7 @@ public class MenuItemsService {
                 .description(menuItems.getDescription())
                 .price(menuItems.getPrice())
                 .categoryId(menuItems.getCategoryId())
+                .imageUrlWithDomain(menuItems.getImageUrl() != null ? imagePath + menuItems.getImageUrl() : null)
                 .imageUrl(menuItems.getImageUrl())
                 .preparationTime(menuItems.getPreparationTime())
                 .categoryName(categoryRepository.getCategoryNameById(menuItems.getCategoryId()))
