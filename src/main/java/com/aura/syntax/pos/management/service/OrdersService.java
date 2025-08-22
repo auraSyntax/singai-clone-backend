@@ -203,20 +203,35 @@ public class OrdersService {
     }
 
     public OrderItems convertForUpdate(OrderItemsDto orderItemsDto) {
-        OrderItems existingOrderItem = orderItemsRepository.findById(orderItemsDto.getId())
-                .orElseThrow(() -> new ServiceException("Order item not found", "Bad request", HttpStatus.BAD_REQUEST));
+        if (orderItemsDto.getId() != null) {
+            OrderItems existingOrderItem = orderItemsRepository.findById(orderItemsDto.getId())
+                    .orElseThrow(() -> new ServiceException("Order item not found", "Bad request", HttpStatus.BAD_REQUEST));
 
-        existingOrderItem.setMenuItemsId(orderItemsDto.getMenuItemsId());
-        existingOrderItem.setQuantity(orderItemsDto.getQuantity());
-        existingOrderItem.setSpecialInstructions(orderItemsDto.getSpecialInstructions());
-        existingOrderItem.setUnitPrice(orderItemsDto.getUnitPrice());
-        existingOrderItem.setTotalPrice(orderItemsDto.getTotalPrice());
-        existingOrderItem.setStatus(orderItemsDto.getStatus() != null && !orderItemsDto.getStatus().isEmpty() ?
-                OrderStatus.fromMappedValue(orderItemsDto.getStatus()) : null);
-        existingOrderItem.setUpdatedAt(LocalDateTime.now());
-        existingOrderItem.setIsRetail(orderItemsDto.getIsRetail());
+            existingOrderItem.setMenuItemsId(orderItemsDto.getMenuItemsId());
+            existingOrderItem.setQuantity(orderItemsDto.getQuantity());
+            existingOrderItem.setSpecialInstructions(orderItemsDto.getSpecialInstructions());
+            existingOrderItem.setUnitPrice(orderItemsDto.getUnitPrice());
+            existingOrderItem.setTotalPrice(orderItemsDto.getTotalPrice());
+            existingOrderItem.setStatus(orderItemsDto.getStatus() != null && !orderItemsDto.getStatus().isEmpty() ?
+                    OrderStatus.fromMappedValue(orderItemsDto.getStatus()) : null);
+            existingOrderItem.setUpdatedAt(LocalDateTime.now());
+            existingOrderItem.setIsRetail(orderItemsDto.getIsRetail());
 
-        return existingOrderItem;
+            return existingOrderItem;
+        }else {
+            return OrderItems.builder()
+                    .id(orderItemsDto.getId())
+                    .orderId(orderItemsDto.getOrderId())
+                    .menuItemsId(orderItemsDto.getMenuItemsId())
+                    .quantity(orderItemsDto.getQuantity())
+                    .specialInstructions(orderItemsDto.getSpecialInstructions())
+                    .createdAt(LocalDateTime.now())
+                    .unitPrice(orderItemsDto.getUnitPrice())
+                    .totalPrice(orderItemsDto.getTotalPrice())
+                    .status(OrderStatus.PENDING)
+                    .isRetail(orderItemsDto.getIsRetail())
+                    .build();
+        }
     }
 
 
