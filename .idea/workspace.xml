@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/TableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/TableController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/TablesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/TablesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/OrdersService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/TableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/TableService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
@@ -376,7 +376,23 @@
       <option name="project" value="LOCAL" />
       <updated>1755827188132</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1755834219890</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1755834219890</updated>
+    </task>
+    <task id="LOCAL-00030" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1755834543417</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1755834543417</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

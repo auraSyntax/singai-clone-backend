@@ -11,6 +11,7 @@ import com.aura.syntax.pos.management.enums.TableStatus;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.TablesRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TableService {
 
     private final TablesRepository tablesRepository;
@@ -79,7 +81,10 @@ public class TableService {
     }
 
     public List<TableDto> getListOfTables(String search, String status){
-        return tablesRepository.getListOfTables(search,status != null ? TableStatus.fromMappedValue(status) : null);
+        List<TableDto> tableDtos = tablesRepository.getListOfTables(search,status != null ? TableStatus.fromMappedValue(status) : null);
+        log.info("statusss+++{}",TableStatus.fromMappedValue(status));
+
+        return tableDtos;
     }
 
     public ResponseDto updateStatus(Long id, String status) {

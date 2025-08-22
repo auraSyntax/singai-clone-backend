@@ -3,10 +3,8 @@ package com.aura.syntax.pos.management.service;
 import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
-import com.aura.syntax.pos.management.enums.OrderStatus;
-import com.aura.syntax.pos.management.enums.OrderType;
-import com.aura.syntax.pos.management.enums.PaymentMethod;
-import com.aura.syntax.pos.management.enums.PaymentStatus;
+import com.aura.syntax.pos.management.entity.Tables;
+import com.aura.syntax.pos.management.enums.*;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +41,12 @@ public class OrdersService {
     private String imagePath;
 
     public SaveOrderResponseDto addOrder(OrdersDto ordersDto) {
+
+        Tables table = tablesRepository.findById(ordersDto.getTableId())
+                .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
+        table.setTableStatus(TableStatus.OCCUPIED);
+        tablesRepository.save(table);
+
         Orders orders = Orders.builder()
                 .id(ordersDto.getId())
                 .orderNumber(generateOrderNumber())
@@ -175,6 +179,19 @@ public class OrdersService {
     public ResponseDto updateOrders(OrdersDto ordersDto) {
         Orders existingOrder = ordersRepository.findById(ordersDto.getId()).orElseThrow(() ->
                 new ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
+
+        if (!ordersDto.getTableId().equals(existingOrder.getTableId())){
+            Tables newTable = tablesRepository.findById(ordersDto.getTableId())
+                    .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
+            newTable.setTableStatus(TableStatus.OCCUPIED);
+            tablesRepository.save(newTable);
+
+            Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
+                    .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
+            existingTable.setTableStatus(TableStatus.AVAILABLE);
+
+            tablesRepository.save(existingTable);
+        }
 
         existingOrder.setTableId(ordersDto.getTableId());
         existingOrder.setWaiterId(ordersDto.getWaiterId());
