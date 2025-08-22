@@ -78,8 +78,8 @@ public class TableService {
         return tableDtoPaginatedResponseDto;
     }
 
-    public List<TableDto> getListOfTables(String search){
-        return tablesRepository.getListOfTables(search);
+    public List<TableDto> getListOfTables(String search, String status){
+        return tablesRepository.getListOfTables(search,status != null ? TableStatus.fromMappedValue(status) : null);
     }
 
     public ResponseDto updateStatus(Long id, String status) {

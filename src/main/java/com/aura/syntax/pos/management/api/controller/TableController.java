@@ -23,8 +23,9 @@ public class TableController {
     }
 
     @GetMapping("/list")
-    public List<TableDto> getListOfTables(@RequestParam(value = "search",required = false) String search){
-        return tableService.getListOfTables(search);
+    public List<TableDto> getListOfTables(@RequestParam(value = "search",required = false) String search,
+                                          @RequestParam(value = "status") String status){
+        return tableService.getListOfTables(search,status);
     }
 
     @GetMapping("/get-all")
