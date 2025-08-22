@@ -48,8 +48,6 @@ public class UserService {
 
     private final EmailNotificationService emailNotificationService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public ResponseDto saveUser(UserDto userDto) {
         User user = User.builder()
                 .id(userDto.getId())
