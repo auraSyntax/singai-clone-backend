@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/IngredientsService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
@@ -317,7 +315,23 @@
       <option name="project" value="LOCAL" />
       <updated>1755668348934</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1755785604118</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1755785604118</updated>
+    </task>
+    <task id="LOCAL-00025" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1755789735464</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1755789735464</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -329,7 +343,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/MenuItemsService.java</url>
-          <line>123</line>
+          <line>130</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

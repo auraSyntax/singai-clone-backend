@@ -3,6 +3,7 @@ package com.aura.syntax.pos.management.api.controller;
 import com.aura.syntax.pos.management.api.dto.OrdersDto;
 import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
 import com.aura.syntax.pos.management.api.dto.ResponseDto;
+import com.aura.syntax.pos.management.api.dto.SaveOrderResponseDto;
 import com.aura.syntax.pos.management.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class OrdersController {
     private final OrdersService ordersService;
 
     @PostMapping
-    public ResponseDto saveOrder(@RequestBody OrdersDto ordersDto){
+    public SaveOrderResponseDto saveOrder(@RequestBody OrdersDto ordersDto){
         return ordersService.addOrder(ordersDto);
     }
 

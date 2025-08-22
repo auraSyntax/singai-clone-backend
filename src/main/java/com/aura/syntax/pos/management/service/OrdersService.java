@@ -1,9 +1,6 @@
 package com.aura.syntax.pos.management.service;
 
-import com.aura.syntax.pos.management.api.dto.OrderItemsDto;
-import com.aura.syntax.pos.management.api.dto.OrdersDto;
-import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
-import com.aura.syntax.pos.management.api.dto.ResponseDto;
+import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
 import com.aura.syntax.pos.management.enums.OrderStatus;
@@ -45,7 +42,7 @@ public class OrdersService {
     @Value("${cloudinary.base.url}")
     private String imagePath;
 
-    public ResponseDto addOrder(OrdersDto ordersDto) {
+    public SaveOrderResponseDto addOrder(OrdersDto ordersDto) {
         Orders orders = Orders.builder()
                 .id(ordersDto.getId())
                 .orderNumber(generateOrderNumber())
@@ -66,7 +63,18 @@ public class OrdersService {
                                 .map(this::convertOrderItems).collect(Collectors.toSet()) : null)
                 .build();
         Orders savedOrder = ordersRepository.save(orders);
-        return new ResponseDto(savedOrder.getOrderNumber());
+        return SaveOrderResponseDto.builder()
+                .id(savedOrder.getId())
+                .waiterId(savedOrder.getWaiterId() != null ?
+                        savedOrder.getWaiterId() : null)
+                .tableId(savedOrder.getTableId() != null ?
+                        savedOrder.getTableId() : null)
+                .orderStatus(savedOrder.getOrderStatus() != null ?
+                        savedOrder.getOrderStatus().getMappedValue() : null)
+                .orderType(savedOrder.getOrderType() != null ?
+                        savedOrder.getOrderType().getMappedValue() : null)
+                .orderNumber(savedOrder.getOrderNumber())
+                .build();
     }
 
     private OrderItems convertOrderItems(OrderItemsDto orderItemsDto) {
