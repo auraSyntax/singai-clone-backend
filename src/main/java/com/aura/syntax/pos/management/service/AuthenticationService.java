@@ -39,7 +39,9 @@ public class AuthenticationService {
 
             User user = userRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new ServiceException("User not found", "Bad request", HttpStatus.BAD_REQUEST));
-
+            if (!request.getRoleId().equals(user.getRoleId())){
+                throw new ServiceException("Role and credentials are conflict", "Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
             return buildAuthResponse(user, authentication);
 
         } catch (BadCredentialsException e) {

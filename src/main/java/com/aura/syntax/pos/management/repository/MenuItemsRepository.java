@@ -15,8 +15,9 @@ public interface MenuItemsRepository extends JpaRepository<MenuItems,Long> {
            "FROM MenuItems m " +
            "WHERE :categoryId IS NULL OR m.categoryId = :categoryId " +
            "AND m.status = 'ACTIVE' " +
+           "AND :search IS NULL OR LOWER(m.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
            "ORDER BY m.createdAt")
-    List<MenuItemsDto> getAllMenuItems(Long categoryId);
+    List<MenuItemsDto> getAllMenuItems(Long categoryId,String search);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.MenuItemsDto(m.id,m.name,m.description,m.price,m.imageUrl,m.preparationTime,m.status,m.categoryId) " +
            "FROM MenuItems m " +

@@ -23,8 +23,9 @@ public class MenuItemsController {
     }
 
     @GetMapping("/list")
-    public List<MenuItemsDto> getAllMenuItems(@RequestParam(value = "categoryId",required = false) Long categoryId){
-        return menuItemsService.getAllMenuItems(categoryId);
+    public List<MenuItemsDto> getAllMenuItems(@RequestParam(value = "categoryId",required = false) Long categoryId,
+                                              @RequestParam(value = "search",required = false) String search){
+        return menuItemsService.getAllMenuItems(categoryId,search);
     }
 
     @GetMapping("/get-all")

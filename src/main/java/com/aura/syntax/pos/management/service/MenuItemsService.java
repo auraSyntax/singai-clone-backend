@@ -72,8 +72,8 @@ public class MenuItemsService {
 
     }
 
-    public List<MenuItemsDto> getAllMenuItems(Long categoryId) {
-        List<MenuItemsDto> menuItemsDtoList = menuItemsRepository.getAllMenuItems(categoryId);
+    public List<MenuItemsDto> getAllMenuItems(Long categoryId,String search) {
+        List<MenuItemsDto> menuItemsDtoList = menuItemsRepository.getAllMenuItems(categoryId,search);
         menuItemsDtoList.stream().forEach(menuItemsDto -> {
             menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
             menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
