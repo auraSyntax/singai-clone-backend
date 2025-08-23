@@ -27,14 +27,16 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "    LOWER(o.orderNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "    LOWER(o.customerName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "    LOWER(o.customerPhone) LIKE LOWER(CONCAT('%', :search, '%'))" +
-           "))")
+           "))" +
+           "ORDER BY o.createdAt DESC")
     Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus,String search);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.menuItemsId,oi.quantity,oi.specialInstructions,oi.status,m.name, " +
            "oi.unitPrice, oi.totalPrice,oi.createdAt,oi.updatedAt,m.price,m.imageUrl,m.preparationTime,oi.isRetail) " +
            "FROM OrderItems oi " +
            "LEFT JOIN MenuItems m ON oi.menuItemsId = m.id " +
-           "WHERE oi.orderId = :id")
+           "WHERE oi.orderId = :id " +
+           "ORDER BY oi.createdAt DESC")
     Set<OrderItemsDto> getAllOrderItems(Long id);
 
     @Query("SELECT oi " +
