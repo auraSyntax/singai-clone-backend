@@ -182,17 +182,19 @@ public class OrdersService {
         Orders existingOrder = ordersRepository.findById(ordersDto.getId()).orElseThrow(() ->
                 new ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
 
-        if (!ordersDto.getTableId().equals(existingOrder.getTableId())){
-            Tables newTable = tablesRepository.findById(ordersDto.getTableId())
-                    .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
-            newTable.setTableStatus(TableStatus.OCCUPIED);
-            tablesRepository.save(newTable);
+        if (ordersDto.getTableId() != null) {
+            if (!ordersDto.getTableId().equals(existingOrder.getTableId())) {
+                Tables newTable = tablesRepository.findById(ordersDto.getTableId())
+                        .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
+                newTable.setTableStatus(TableStatus.OCCUPIED);
+                tablesRepository.save(newTable);
 
-            Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
-                    .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
-            existingTable.setTableStatus(TableStatus.AVAILABLE);
+                Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
+                        .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
+                existingTable.setTableStatus(TableStatus.AVAILABLE);
 
-            tablesRepository.save(existingTable);
+                tablesRepository.save(existingTable);
+            }
         }
 
         existingOrder.setTableId(ordersDto.getTableId());
