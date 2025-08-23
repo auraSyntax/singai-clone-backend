@@ -42,10 +42,12 @@ public class OrdersService {
 
     public SaveOrderResponseDto addOrder(OrdersDto ordersDto) {
 
-        Tables table = tablesRepository.findById(ordersDto.getTableId())
-                .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
-        table.setTableStatus(TableStatus.OCCUPIED);
-        tablesRepository.save(table);
+        if (ordersDto.getTableId() != null) {
+            Tables table = tablesRepository.findById(ordersDto.getTableId())
+                    .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
+            table.setTableStatus(TableStatus.OCCUPIED);
+            tablesRepository.save(table);
+        }
 
         Orders orders = Orders.builder()
                 .id(ordersDto.getId())
