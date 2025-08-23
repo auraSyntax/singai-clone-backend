@@ -198,10 +198,10 @@ public class OrdersService {
         existingOrder.setCustomerName(ordersDto.getCustomerName());
         existingOrder.setCustomerPhone(ordersDto.getCustomerPhone());
         existingOrder.setOrderType(OrderType.fromMappedValue(ordersDto.getOrderType()));
-        existingOrder.setOrderStatus(OrderStatus.PENDING);
+        existingOrder.setOrderStatus(OrderStatus.fromMappedValue(ordersDto.getOrderStatus()));
         existingOrder.setTaxAmount(ordersDto.getTaxAmount());
         existingOrder.setDiscountAmount(ordersDto.getDiscountAmount());
-        existingOrder.setPaymentStatus(PaymentStatus.PENDING);
+        existingOrder.setPaymentStatus(PaymentStatus.fromMappedValue(ordersDto.getPaymentStatus()));
         existingOrder.setPaymentMethod(PaymentMethod.fromMappedValue(ordersDto.getPaymentMethod()));
         existingOrder.setNotes(ordersDto.getNotes());
         existingOrder.setUpdatedAt(LocalDateTime.now());
@@ -229,8 +229,7 @@ public class OrdersService {
             existingOrderItem.setSpecialInstructions(orderItemsDto.getSpecialInstructions());
             existingOrderItem.setUnitPrice(orderItemsDto.getUnitPrice());
             existingOrderItem.setTotalPrice(orderItemsDto.getTotalPrice());
-            existingOrderItem.setStatus(orderItemsDto.getStatus() != null && !orderItemsDto.getStatus().isEmpty() ?
-                    OrderStatus.fromMappedValue(orderItemsDto.getStatus()) : null);
+            existingOrderItem.setStatus(OrderStatus.fromMappedValue(orderItemsDto.getStatus()));
             existingOrderItem.setUpdatedAt(LocalDateTime.now());
             existingOrderItem.setIsRetail(orderItemsDto.getIsRetail());
 
