@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/file-upload")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:5173"})
+@CrossOrigin(origins = {"http://localhost:5173","https://singai-pos.onrender.com"})
 public class FileUploadController {
 
     private final FileUploadService fileUploadService;

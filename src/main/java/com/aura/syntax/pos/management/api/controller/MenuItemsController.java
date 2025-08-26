@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/menu-items")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:5173"})
+@CrossOrigin(origins = {"http://localhost:5173","https://singai-pos.onrender.com"})
 public class MenuItemsController {
 
     private final MenuItemsService menuItemsService;
