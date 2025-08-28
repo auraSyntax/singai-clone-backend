@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:5173","https://singai-pos.onrender.com"})
+@CrossOrigin(origins = {"http://localhost:5173","https://singai-pos.onrender.com","https://astounding-monstera-9f8e37.netlify.app"})
 public class UserController {
 
     private final UserService userService;
