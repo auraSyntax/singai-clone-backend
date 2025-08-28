@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173","https://singai-pos.onrender.com")
+                        .allowedOrigins("http://localhost:5173","https://singai-pos.onrender.com","https://astounding-monstera-9f8e37.netlify.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
