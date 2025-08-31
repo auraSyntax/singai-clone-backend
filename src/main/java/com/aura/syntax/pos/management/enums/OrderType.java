@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum OrderType {
-    DINE_IN("Dine In"),
-    TAKE_AWAY("Take Away"),
+    DINE_IN("Dine in"),
+    TAKE_AWAY("Takeaway"),
     DELIVERY("Delivery");
 
     private final String mappedValue;
