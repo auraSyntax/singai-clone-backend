@@ -162,8 +162,26 @@ public class OrdersService {
         List<OrdersDto> ordersDtoList = ordersDtos.getContent();
         ordersDtoList.stream().forEach(ordersDto -> {
             Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId());
+
+
             orderItemsDtos.stream().forEach(orderItemsDto -> {
                 orderItemsDto.setImageUrl(orderItemsDto.getImageUrl() != null ? imagePath + orderItemsDto.getImageUrl() : null);
+                Double subTotal = orderItemsDtos.stream()
+                        .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
+                        .sum();
+
+                Double total = subTotal + ordersDto.getTaxAmount() - ordersDto.getDiscountAmount();
+                ordersDto.setSubTotal(subTotal);
+                ordersDto.setTotalAmount(total);
+
+                Integer avgPreparationTime = 0;
+                if (orderItemsDtos != null && !orderItemsDtos.isEmpty()) {
+                    Integer totalPrepTime = orderItemsDtos.stream()
+                            .mapToInt(item -> item.getPreparationTime() != null ? item.getPreparationTime() : 0)
+                            .sum();
+                    avgPreparationTime = totalPrepTime / orderItemsDtos.size();
+                }
+                ordersDto.setOrderPreparationTime(avgPreparationTime);
             });
             ordersDto.setOrderItemsDtos(orderItemsDtos);
         });

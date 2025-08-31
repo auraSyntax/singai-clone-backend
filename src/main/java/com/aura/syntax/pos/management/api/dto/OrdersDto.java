@@ -34,6 +34,8 @@ public class OrdersDto {
     private Set<OrderItemsDto> orderItemsDtos;
     private String tableName;
     private String waiterName;
+    private Double totalAmount;
+    private Integer orderPreparationTime;
 
     public OrdersDto(Long id, String orderNumber, Long tableId, Long waiterId, OrderType orderType, OrderStatus orderStatus,
                      PaymentMethod paymentMethod, PaymentStatus paymentStatus, String customerName, String customerPhone, String notes, Double subTotal,
