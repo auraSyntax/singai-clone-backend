@@ -8,6 +8,7 @@ import com.aura.syntax.pos.management.enums.Status;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.MainCategoriesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +24,15 @@ public class MainCategoryService {
 
     private final MainCategoriesRepository mainCategoriesRepository;
 
+    @Value("${cloudinary.base.url}")
+    private String imagePath;
+
     public ResponseDto addMainCategory(MainCategoryDto mainCategoryDto){
         MainCategories mainCategories = MainCategories.builder()
                 .id(mainCategoryDto.getId())
                 .mainCategoryName(mainCategoryDto.getMainCategoryName())
                 .description(mainCategoryDto.getDescription())
-                .imageUrl(mainCategoryDto.getImageUrl())
+                .imageUrl(mainCategoryDto.getImageUrl() != null ? imagePath + mainCategoryDto.getImageUrl() : null)
                 .status(Status.ACTIVE)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -48,6 +52,9 @@ public class MainCategoryService {
         Page<MainCategoryDto> mainCategoryDtos = mainCategoriesRepository.getAllMainCategoriesPagination(pageable,search);
         PaginatedResponseDto<MainCategoryDto> mainCategoryDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<MainCategoryDto> mainCategories = mainCategoryDtos.getContent();
+        mainCategories.stream().forEach(mainCategoryDto -> {
+            mainCategoryDto.setImageUrl(mainCategoryDto.getImageUrl() != null ? imagePath + mainCategoryDto.getImageUrl() : null);
+        });
         mainCategoryDtoPaginatedResponseDto.setData(mainCategories);
         mainCategoryDtoPaginatedResponseDto.setCurrentPage(page);
         mainCategoryDtoPaginatedResponseDto.setTotalPages(mainCategoryDtos.getTotalPages());

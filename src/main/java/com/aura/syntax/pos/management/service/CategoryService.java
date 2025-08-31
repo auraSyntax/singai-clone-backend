@@ -11,6 +11,7 @@ import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.CategoryRepository;
 import com.aura.syntax.pos.management.repository.MainCategoriesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,9 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     private final MainCategoriesRepository mainCategoriesRepository;
+
+    @Value("${cloudinary.base.url}")
+    private String imagePath;
 
     public ResponseDto addCategory(CategoryDto categoryDto){
         MainCategories existingMainCategory = mainCategoriesRepository.findById(categoryDto.getMainCategoryId()).orElseThrow(() -> new
@@ -51,6 +55,7 @@ public class CategoryService {
         List<CategoryDto> categoryDtos = categoryRepository.getAllCategories(mainCategoryId);
         categoryDtos.stream().forEach(categoryDto -> {
             categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
+            categoryDto.setImageUrl(categoryDto.getImageUrl() != null ? imagePath + categoryDto.getImageUrl() : null);
         });
 
         return categoryDtos;
@@ -63,6 +68,7 @@ public class CategoryService {
         List<CategoryDto> categories = categoryDtos.getContent();
         categoryDtos.stream().forEach(categoryDto -> {
             categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
+            categoryDto.setImageUrl(categoryDto.getImageUrl() != null ? imagePath + categoryDto.getImageUrl() : null);
         });
         categoryDtoPaginatedResponseDto.setData(categories);
         categoryDtoPaginatedResponseDto.setCurrentPage(page);
