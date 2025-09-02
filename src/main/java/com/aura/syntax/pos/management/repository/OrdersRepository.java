@@ -16,7 +16,7 @@ import java.util.Set;
 
 public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes,o.subTotal,o.discountAmount,o.taxAmount,t.tableNumber, CONCAT(u.firstName,' ',u.lastName) AS waiterName) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes,o.subTotal,o.discountAmount,o.taxAmount,t.tableNumber, u.lastName AS waiterName) " +
            "FROM Orders o " +
            "LEFT JOIN Tables t ON o.tableId = t.id " +
            "LEFT JOIN User u ON o.waiterId = u.id " +
