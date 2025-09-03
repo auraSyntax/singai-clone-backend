@@ -1,6 +1,7 @@
 package com.aura.syntax.pos.management.service;
 
 import com.aura.syntax.pos.management.api.dto.*;
+import com.aura.syntax.pos.management.config.websocket.WebSocketChannelInterceptor;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
 import com.aura.syntax.pos.management.entity.Tables;
@@ -36,6 +37,7 @@ public class OrdersService {
     private final UserRepository userRepository;
     private final MenuItemsRepository menuItemsRepository;
     private final OrderItemsRepository orderItemsRepository;
+    private final WebSocketChannelInterceptor webSocketChannelInterceptor;
 
     @Value("${cloudinary.base.url}")
     private String imagePath;
@@ -151,6 +153,7 @@ public class OrdersService {
                 .unitPrice(orderItems.getUnitPrice())
                 .totalPrice(orderItems.getTotalPrice())
                 .isRetail(orderItems.getIsRetail())
+                .status(orderItems.getStatus() != null ? orderItems.getStatus().getMappedValue() : null)
                 .build();
     }
 
@@ -237,6 +240,8 @@ public class OrdersService {
         }
 
         ordersRepository.save(existingOrder);
+
+        webSocketChannelInterceptor.notifyKitchen();
 
         return new ResponseDto("Order updated successfully");
     }

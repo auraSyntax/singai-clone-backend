@@ -2,6 +2,7 @@ package com.aura.syntax.pos.management.repository;
 
 import com.aura.syntax.pos.management.api.dto.OrderItemsDto;
 import com.aura.syntax.pos.management.api.dto.OrdersDto;
+import com.aura.syntax.pos.management.config.websocket.OrdersWebSocketDto;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
 import com.aura.syntax.pos.management.enums.OrderStatus;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -43,4 +46,12 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "FROM OrderItems oi " +
            "WHERE oi.orderId = :id")
     Set<OrderItems> getAllOrderItemsByOrderId(Long id);
+
+    @Query("""
+            SELECT NEW com.aura.syntax.pos.management.config.websocket.OrdersWebSocketDto(o.id,o.orderNumber,o.orderType,o.orderStatus)
+            FROM Orders o
+            WHERE o.createdAt BETWEEN :startOfDay AND :endOfDay
+            AND o.orderStatus = 'CONFIRMED'
+            """)
+    List<OrdersWebSocketDto> getAllOrdersForKitchen(LocalDateTime startOfDay,LocalDateTime endOfDay);
 }
