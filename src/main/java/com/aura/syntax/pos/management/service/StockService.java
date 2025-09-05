@@ -1,12 +1,15 @@
 package com.aura.syntax.pos.management.service;
 
-import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
-import com.aura.syntax.pos.management.api.dto.ResponseDto;
-import com.aura.syntax.pos.management.api.dto.StockDto;
-import com.aura.syntax.pos.management.api.dto.StockItemsDto;
+import com.aura.syntax.pos.management.api.dto.*;
+import com.aura.syntax.pos.management.entity.MenuItems;
+import com.aura.syntax.pos.management.entity.Product;
 import com.aura.syntax.pos.management.entity.Stock;
 import com.aura.syntax.pos.management.entity.StockItems;
+import com.aura.syntax.pos.management.enums.Status;
+import com.aura.syntax.pos.management.enums.Type;
 import com.aura.syntax.pos.management.exception.ServiceException;
+import com.aura.syntax.pos.management.repository.MenuItemsRepository;
+import com.aura.syntax.pos.management.repository.ProductRepository;
 import com.aura.syntax.pos.management.repository.StockItemRepository;
 import com.aura.syntax.pos.management.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,10 @@ public class StockService {
 
     private final StockItemRepository stockItemRepository;
 
+    private final ProductRepository productRepository;
+
+    private final MenuItemsRepository menuItemsRepository;
+
     public ResponseDto addStock(StockDto stockDto) {
         Stock stock = Stock.builder()
                 .id(stockDto.getId())
@@ -37,9 +42,10 @@ public class StockService {
                 .dateTime(stockDto.getDateTime())
                 .invoiceNumber(stockDto.getInvoiceNumber())
                 .stockItems(stockDto.getStockItemsDtos() != null && !stockDto.getStockItemsDtos().isEmpty() ?
-                        convertStockItems(stockDto.getStockItemsDtos()) : null)
+                        convertStockItems(stockDto.getStockItemsDtos(), stockDto.getProductDtos()) : null)
                 .createdAt(LocalDateTime.now())
                 .isActive(Boolean.TRUE)
+                .stockName(stockDto.getStockName())
                 .build();
 
         stockRepository.save(stock);
@@ -47,12 +53,54 @@ public class StockService {
         return new ResponseDto("Ingredient saved");
     }
 
-    private Set<StockItems> convertStockItems(Set<StockItemsDto> stockItemsDtos) {
+    private Set<StockItems> convertStockItems(Set<StockItemsDto> stockItemsDtos, Set<ProductDto> productDtos) {
         Set<StockItems> stockItems = new HashSet<>();
-        stockItemsDtos.stream().forEach(stockItemsDto -> {
+
+        Map<Long, Long> newProductIdMap = new HashMap<>();
+        if (productDtos != null && !productDtos.isEmpty()) {
+            for (ProductDto productDto : productDtos) {
+                Product product = Product.builder()
+                        .id(productDto.getId())
+                        .productName(productDto.getProductName())
+                        .minimumStock(productDto.getMinimumStock())
+                        .currentStock(productDto.getCurrentStock())
+                        .type(Type.fromMappedValue(productDto.getType()))
+                        .createdAt(LocalDateTime.now())
+                        .isActive(Boolean.TRUE)
+                        .build();
+                productRepository.save(product);
+                newProductIdMap.put(productDto.getId(), product.getId());
+
+                if (productDto.getType().equalsIgnoreCase(Type.RETAIL_ITEM.getMappedValue())){
+                    MenuItems menuItems = MenuItems.builder()
+                            .name(productDto.getProductName())
+                            .categoryId(productDto.getCategoryId())
+                            .description(productDto.getDescription())
+                            .imageUrl(productDto.getImageUrl())
+                            .price(productDto.getPrice())
+                            .createdAt(LocalDateTime.now())
+                            .status(Status.ACTIVE)
+                            .build();
+                    menuItemsRepository.save(menuItems);
+                }
+            }
+        }
+
+        for (StockItemsDto stockItemsDto : stockItemsDtos) {
+            Long productId = stockItemsDto.getProductId();
+
+            if (productId == null && !newProductIdMap.isEmpty()) {
+                productId = newProductIdMap.values().iterator().next();
+            } else {
+                Product existingProduct = productRepository.findById(productId)
+                        .orElseThrow(() -> new ServiceException("Product not found","Bad request",HttpStatus.BAD_REQUEST));
+                existingProduct.setCurrentStock(existingProduct.getCurrentStock() + stockItemsDto.getQuantity());
+                productRepository.save(existingProduct);
+            }
+
             StockItems stockItem = StockItems.builder()
                     .id(stockItemsDto.getId())
-                    .productId(stockItemsDto.getProductId())
+                    .productId(productId)
                     .salesPrice(stockItemsDto.getSalesPrice())
                     .retailPrice(stockItemsDto.getRetailPrice())
                     .unit(stockItemsDto.getUnit())
@@ -61,19 +109,21 @@ public class StockService {
                     .isActive(Boolean.TRUE)
                     .createdAt(LocalDateTime.now())
                     .build();
+
             stockItems.add(stockItem);
-        });
+        }
 
         return stockItems;
     }
+
 
     public List<StockDto> getAllStocks() {
         return stockRepository.getAllStock();
     }
 
     public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search) {
-        Pageable pageable = PageRequest.of(page - 1,size);
-        Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable,search);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable, search);
         PaginatedResponseDto<StockDto> ingredientsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<StockDto> ingredientsDtosContent = ingredientsDtos.getContent();
         ingredientsDtoPaginatedResponseDto.setData(ingredientsDtosContent);
@@ -86,7 +136,7 @@ public class StockService {
 
     public StockDto getStockById(Long id) {
         Stock stock = stockRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Stock not found", "Bad request", HttpStatus.BAD_REQUEST));
         return StockDto.builder()
                 .id(stock.getId())
                 .total(stock.getTotal())
@@ -118,14 +168,14 @@ public class StockService {
 
     public ResponseDto deleteStock(Long id) {
         Stock stock = stockRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Stock not found", "Bad request", HttpStatus.BAD_REQUEST));
         stockRepository.deleteById(id);
         return new ResponseDto("Stock deleted successfully");
     }
 
     public ResponseDto updateStock(StockDto stockDto) {
         Stock stock = stockRepository.findById(stockDto.getId()).orElseThrow(() -> new
-                ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Stock not found", "Bad request", HttpStatus.BAD_REQUEST));
         stock.setId(stockDto.getId());
         stock.setTotal(stockDto.getTotal());
         stock.setDateTime(stockDto.getDateTime());
@@ -134,7 +184,7 @@ public class StockService {
         stock.setStockItems(stockDto.getStockItemsDtos() != null && !stockDto.getStockItemsDtos().isEmpty() ?
                 stockDto.getStockItemsDtos().stream().map(stockItemsDto -> {
                     StockItems stockItem = stockItemRepository.findById(stockItemsDto.getId()).orElseThrow(() -> new
-                            ServiceException("Stock not found","Bad request", HttpStatus.BAD_REQUEST));
+                            ServiceException("Stock not found", "Bad request", HttpStatus.BAD_REQUEST));
                     stockItem.setProductId(stockItemsDto.getProductId());
                     stockItem.setUnit(stockItemsDto.getUnit());
                     stockItem.setSalesPrice(stockItemsDto.getSalesPrice());

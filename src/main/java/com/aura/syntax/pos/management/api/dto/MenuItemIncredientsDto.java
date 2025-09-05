@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class MenuItemIncredientsDto {
     private Long id;
     private Long menuItemsId;
-    private Long stockId;
+    private Long productId;
     private Integer quantityRequired;
     private String unit;
     private LocalDateTime createdAt;

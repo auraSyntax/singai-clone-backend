@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class MenuItemStock {
+public class MenuItemIngredients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long menuItemsId;
-    private Long stockId;
+    private Long productId;
     private String unit;
     private Integer quantityRequired;
     private LocalDateTime createdAt;

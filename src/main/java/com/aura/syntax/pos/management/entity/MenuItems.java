@@ -31,5 +31,5 @@ public class MenuItems {
     private LocalDateTime updatedAt;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "menuItemsId")
-    private Set<MenuItemStock> menuItemStocks;
+    private Set<MenuItemIngredients> menuItemIngredients;
 }

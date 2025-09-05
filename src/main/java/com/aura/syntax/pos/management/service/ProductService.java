@@ -7,6 +7,7 @@ import com.aura.syntax.pos.management.api.dto.StockItemsDto;
 import com.aura.syntax.pos.management.entity.MenuItems;
 import com.aura.syntax.pos.management.entity.Product;
 import com.aura.syntax.pos.management.entity.StockItems;
+import com.aura.syntax.pos.management.enums.Status;
 import com.aura.syntax.pos.management.enums.Type;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.MenuItemsRepository;
@@ -38,6 +39,8 @@ public class ProductService {
                     .description(productDto.getDescription())
                     .imageUrl(productDto.getImageUrl())
                     .price(productDto.getPrice())
+                    .createdAt(LocalDateTime.now())
+                    .status(Status.ACTIVE)
                     .build();
             menuItemsRepository.save(menuItems);
         }

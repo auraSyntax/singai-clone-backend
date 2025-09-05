@@ -20,7 +20,7 @@ public class ProductController {
         return productService.addProduct(productDto);
     }
 
-    @GetMapping("get-by-id")
+    @GetMapping("/get-by-id")
     public ProductDto getStockItemById(@RequestParam(value = "id") Long id){
         return productService.getProductById(id);
     }

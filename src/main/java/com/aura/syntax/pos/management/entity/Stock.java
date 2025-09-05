@@ -18,6 +18,7 @@ public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String stockName;
     private LocalDateTime dateTime;
     private Double total;
     private String invoiceNumber;

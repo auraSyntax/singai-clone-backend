@@ -2,7 +2,7 @@ package com.aura.syntax.pos.management.service;
 
 import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.entity.Categories;
-import com.aura.syntax.pos.management.entity.MenuItemStock;
+import com.aura.syntax.pos.management.entity.MenuItemIngredients;
 import com.aura.syntax.pos.management.entity.MenuItems;
 import com.aura.syntax.pos.management.enums.Status;
 import com.aura.syntax.pos.management.exception.ServiceException;
@@ -48,7 +48,7 @@ public class MenuItemsService {
                 .description(menuItemsDto.getDescription())
                 .preparationTime(menuItemsDto.getPreparationTime())
                 .price(menuItemsDto.getPrice())
-                .menuItemStocks(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
+                .menuItemIngredients(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
                         menuItemsDto.getMenuItemIncredientsDtos().stream()
                                 .map(this::saveMenuItemIncredients)
                                 .collect(Collectors.toSet()) : null)
@@ -60,12 +60,12 @@ public class MenuItemsService {
         return new ResponseDto("Menu Item Saved");
     }
 
-    private MenuItemStock saveMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto) {
-        return MenuItemStock.builder()
+    private MenuItemIngredients saveMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto) {
+        return MenuItemIngredients.builder()
                 .id(menuItemIncredientsDto.getId())
                 .menuItemsId(menuItemIncredientsDto.getMenuItemsId())
                 .createdAt(LocalDateTime.now())
-                .stockId(menuItemIncredientsDto.getStockId())
+                .productId(menuItemIncredientsDto.getProductId())
                 .quantityRequired(menuItemIncredientsDto.getQuantityRequired())
                 .unit(menuItemIncredientsDto.getUnit())
                 .build();
@@ -125,10 +125,10 @@ public class MenuItemsService {
         existingMenuItem.setCategoryId(menuItemsDto.getCategoryId());
         existingMenuItem.setImageUrl(menuItemsDto.getImageUrl());
         existingMenuItem.setPreparationTime(menuItemsDto.getPreparationTime());
-        existingMenuItem.setMenuItemStocks(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
+        existingMenuItem.setMenuItemIngredients(menuItemsDto.getMenuItemIncredientsDtos() != null && !menuItemsDto.getMenuItemIncredientsDtos().isEmpty() ?
                 menuItemsDto.getMenuItemIncredientsDtos().stream()
                         .map(menuItemIncredientsDto -> {
-                            MenuItemStock existingMenuItemStock = menuItemStockRepository.findById(menuItemIncredientsDto.getId())
+                            MenuItemIngredients existingMenuItemStock = menuItemStockRepository.findById(menuItemIncredientsDto.getId())
                                     .orElseThrow(() -> new ServiceException("Menu item stock not found","Bad request",HttpStatus.BAD_REQUEST));
                             updateMenuItemIncredients(menuItemIncredientsDto,existingMenuItemStock);
 
@@ -140,11 +140,11 @@ public class MenuItemsService {
         return new ResponseDto("Menu Item updated successfully");
     }
 
-    private MenuItemStock updateMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto,MenuItemStock menuItemStock) {
+    private MenuItemIngredients updateMenuItemIncredients(MenuItemIncredientsDto menuItemIncredientsDto, MenuItemIngredients menuItemStock) {
         menuItemStock.setId(menuItemIncredientsDto.getId());
         menuItemStock.setMenuItemsId(menuItemIncredientsDto.getMenuItemsId());
         menuItemStock.setUnit(menuItemIncredientsDto.getUnit());
-        menuItemStock.setStockId(menuItemIncredientsDto.getStockId());
+        menuItemStock.setProductId(menuItemIncredientsDto.getProductId());
         menuItemStock.setQuantityRequired(menuItemIncredientsDto.getQuantityRequired());
         return menuItemStock;
     }

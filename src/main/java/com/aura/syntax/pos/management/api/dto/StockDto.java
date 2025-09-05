@@ -16,11 +16,13 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StockDto {
     private Long id;
+    private String stockName;
     private LocalDateTime dateTime;
     private Double total;
     private String invoiceNumber;
     private Boolean isActive;
     private Set<StockItemsDto> stockItemsDtos;
+    private Set<ProductDto> productDtos;
 
     public StockDto(Long id, Boolean isActive) {
         this.id = id;

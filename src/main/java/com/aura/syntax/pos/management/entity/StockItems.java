@@ -24,7 +24,6 @@ public class StockItems {
     private String unit;
     private Double salesPrice;
     private Double retailPrice;
-    private Long menuItemId;
     private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
