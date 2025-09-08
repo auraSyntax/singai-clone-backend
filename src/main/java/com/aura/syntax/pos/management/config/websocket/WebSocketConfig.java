@@ -26,11 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/api/v1/ws")
-                .setAllowedOriginPatterns(
-                        "http://localhost:5173",
-                        "https://singai-pos.onrender.com",
-                        "https://astounding-monstera-9f8e37.netlify.app"
-                )
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 

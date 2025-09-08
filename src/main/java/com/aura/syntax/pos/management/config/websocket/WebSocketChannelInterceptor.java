@@ -45,7 +45,6 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
                 notifyKitchen();
             }
         }
-
         return message;
     }
 
