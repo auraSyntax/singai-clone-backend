@@ -271,7 +271,7 @@ public class OrdersService {
                     .createdAt(LocalDateTime.now())
                     .unitPrice(orderItemsDto.getUnitPrice())
                     .totalPrice(orderItemsDto.getTotalPrice())
-                    .status(OrderStatus.PENDING)
+                    .status(orderItemsDto.getStatus() != null ? OrderStatus.fromMappedValue(orderItemsDto.getStatus()) : null)
                     .isRetail(orderItemsDto.getIsRetail())
                     .build();
         }
