@@ -204,12 +204,23 @@ public class OrdersService {
                 new ServiceException("Order not found", "Bad request", HttpStatus.BAD_REQUEST));
 
         if (ordersDto.getTableId() != null) {
-            if (!ordersDto.getTableId().equals(existingOrder.getTableId())) {
+            if (!ordersDto.getTableId().equals(existingOrder.getTableId()) && ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
                 Tables newTable = tablesRepository.findById(ordersDto.getTableId())
                         .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
                 newTable.setTableStatus(TableStatus.OCCUPIED);
                 tablesRepository.save(newTable);
 
+                Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
+                        .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
+                existingTable.setTableStatus(TableStatus.AVAILABLE);
+
+                tablesRepository.save(existingTable);
+            } else if (ordersDto.getTableId().equals(existingOrder.getTableId()) && ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
+                Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
+                        .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
+                existingTable.setTableStatus(TableStatus.OCCUPIED);
+                tablesRepository.save(existingTable);
+            } else if (ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.COMPLETED.getMappedValue())) {
                 Tables existingTable = tablesRepository.findById(existingOrder.getTableId())
                         .orElseThrow(() -> new ServiceException("Table not found", "Bad request", HttpStatus.BAD_REQUEST));
                 existingTable.setTableStatus(TableStatus.AVAILABLE);
@@ -261,7 +272,7 @@ public class OrdersService {
             existingOrderItem.setIsRetail(orderItemsDto.getIsRetail());
 
             return existingOrderItem;
-        }else {
+        } else {
             return OrderItems.builder()
                     .id(orderItemsDto.getId())
                     .orderId(orderItemsDto.getOrderId())
