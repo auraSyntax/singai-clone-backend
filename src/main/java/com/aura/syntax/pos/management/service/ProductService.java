@@ -111,4 +111,8 @@ public class ProductService {
         productRepository.deleteById(id);
         return new ResponseDto("Product deleted successfully");
     }
+
+    public List<ProductDto> getProductsForDropdown() {
+        return productRepository.getProductsForDropdown();
+    }
 }

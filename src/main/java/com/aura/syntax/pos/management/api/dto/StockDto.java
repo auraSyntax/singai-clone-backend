@@ -24,8 +24,10 @@ public class StockDto {
     private Set<StockItemsDto> stockItemsDtos;
     private Set<ProductDto> productDtos;
 
-    public StockDto(Long id, Boolean isActive) {
+    public StockDto(Long id, String stockName, String invoiceNumber, Double total) {
         this.id = id;
-        this.isActive = isActive;
+        this.stockName = stockName;
+        this.invoiceNumber = invoiceNumber;
+        this.total = total;
     }
 }

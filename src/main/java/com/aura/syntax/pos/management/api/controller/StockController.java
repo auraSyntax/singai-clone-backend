@@ -30,8 +30,9 @@ public class StockController {
     @GetMapping("/get-all")
     public PaginatedResponseDto<StockDto> getAllStocksPagination(@RequestParam(value = "page") Integer page,
                                                                       @RequestParam(value = "size") Integer size,
-                                                                      @RequestParam(value = "search",required = false) String search){
-        return stockService.getAllStocksPagination(page,size,search);
+                                                                      @RequestParam(value = "search",required = false) String search,
+                                                                 @RequestParam(value = "productId",required = false) Long productId){
+        return stockService.getAllStocksPagination(page,size,search,productId);
     }
 
     @GetMapping("/get-by-id")

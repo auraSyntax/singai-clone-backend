@@ -71,7 +71,7 @@ public class StockService {
                 productRepository.save(product);
                 newProductIdMap.put(productDto.getId(), product.getId());
 
-                if (productDto.getType().equalsIgnoreCase(Type.RETAIL_ITEM.getMappedValue())){
+                if (productDto.getType().equalsIgnoreCase(Type.RETAIL_ITEM.getMappedValue())) {
                     MenuItems menuItems = MenuItems.builder()
                             .name(productDto.getProductName())
                             .categoryId(productDto.getCategoryId())
@@ -83,6 +83,20 @@ public class StockService {
                             .build();
                     menuItemsRepository.save(menuItems);
                 }
+
+                StockItems stockItem = StockItems.builder()
+                        .productId(product.getId())
+                        .salesPrice(productDto.getSalesPrice())
+                        .retailPrice(productDto.getRetailPrice())
+                        .unit(productDto.getUnit())
+                        .quantity(productDto.getQuantity())
+                        .costPerUnit(productDto.getCostPerUnit())
+                        .isActive(Boolean.TRUE)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+
+                stockItems.add(stockItem);
+
             }
         }
 
@@ -93,7 +107,7 @@ public class StockService {
                 productId = newProductIdMap.values().iterator().next();
             } else {
                 Product existingProduct = productRepository.findById(productId)
-                        .orElseThrow(() -> new ServiceException("Product not found","Bad request",HttpStatus.BAD_REQUEST));
+                        .orElseThrow(() -> new ServiceException("Product not found", "Bad request", HttpStatus.BAD_REQUEST));
                 existingProduct.setCurrentStock(existingProduct.getCurrentStock() + stockItemsDto.getQuantity());
                 productRepository.save(existingProduct);
             }
@@ -121,11 +135,15 @@ public class StockService {
         return stockRepository.getAllStock();
     }
 
-    public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search) {
+    public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search,Long productId) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable, search);
         PaginatedResponseDto<StockDto> ingredientsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<StockDto> ingredientsDtosContent = ingredientsDtos.getContent();
+        ingredientsDtosContent.forEach(stockDto -> {
+            Set<StockItemsDto> stockItemsDtos = stockRepository.getAllStockItemsByStockId(stockDto.getId(),productId);
+            stockDto.setStockItemsDtos(stockItemsDtos);
+        });
         ingredientsDtoPaginatedResponseDto.setData(ingredientsDtosContent);
         ingredientsDtoPaginatedResponseDto.setCurrentPage(page);
         ingredientsDtoPaginatedResponseDto.setTotalPages(ingredientsDtos.getTotalPages());
@@ -159,6 +177,7 @@ public class StockService {
                     .quantity(stockItem.getQuantity())
                     .costPerUnit(stockItem.getCostPerUnit())
                     .isActive(Boolean.TRUE)
+                    .productName(productRepository.findProductNameById(stockItem.getProductId()))
                     .build();
             stockItemsDtos.add(itemsDto);
         });

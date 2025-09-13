@@ -9,9 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.ProductDto(p.id,p.productName,p.currentStock,p.minimumStock,p.type,p.isActive) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.ProductDto(p.id,p.productName, " +
+           "p.currentStock,p.minimumStock,p.type, CASE WHEN p.currentStock < p.minimumStock THEN true ELSE false END AS isMinimumStock) " +
            "FROM Product p " +
            "WHERE :search IS NULL OR p.productName LIKE %:search%")
     Page<ProductDto> getAllProductItems(Pageable pageable, String search);
@@ -20,4 +23,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
            "FROM Product p " +
            "WHERE p.id = :id")
     String findProductNameById(Long id);
+
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.ProductDto(p.id,p.productName) " +
+           "FROM Product p ")
+    List<ProductDto> getProductsForDropdown();
 }

@@ -1,6 +1,9 @@
 package com.aura.syntax.pos.management.config.websocket;
 
+import com.aura.syntax.pos.management.api.dto.OrdersDto;
 import com.aura.syntax.pos.management.repository.OrdersRepository;
+import com.aura.syntax.pos.management.service.OrdersService;
+import com.aura.syntax.pos.management.service.SocketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +35,7 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
 
     public static Set<String> connectedUserIds = ConcurrentHashMap.newKeySet();
 
-    private final OrdersRepository ordersRepository;
+    private final SocketService socketService;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -61,11 +64,8 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
     public void notifyKitchen() {
         new Thread(() -> {
             try {
-                LocalDate date = LocalDate.now();
-                LocalDateTime startOfDay = date.atStartOfDay();
-                LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
 
-                List<OrdersWebSocketDto> ordersWebSocketDtos = ordersRepository.getAllOrdersForKitchen(startOfDay,endOfDay);
+                OrdersDto ordersWebSocketDtos = socketService.getOrdersForSocket();
 
                 String json = new ObjectMapper().writeValueAsString(ordersWebSocketDtos);
                 Thread.sleep(2000);

@@ -7,6 +7,8 @@ import com.aura.syntax.pos.management.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/product")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-by-id")
-    public ProductDto getStockItemById(@RequestParam(value = "id") Long id){
+    public ProductDto getProductById(@RequestParam(value = "id") Long id){
         return productService.getProductById(id);
     }
 
@@ -46,5 +48,10 @@ public class ProductController {
     @DeleteMapping
     public ResponseDto deleteStockItem(@RequestParam(value = "id") Long id){
         return productService.deleteProduct(id);
+    }
+
+    @GetMapping("/dropdown")
+    public List<ProductDto> getProductsForDropdown(){
+        return productService.getProductsForDropdown();
     }
 }

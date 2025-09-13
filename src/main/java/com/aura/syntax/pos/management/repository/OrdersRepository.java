@@ -34,6 +34,22 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "ORDER BY o.createdAt DESC")
     Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus,String search);
 
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes,o.subTotal,o.discountAmount,o.taxAmount,t.tableNumber, u.lastName AS waiterName) " +
+           "FROM Orders o " +
+           "LEFT JOIN Tables t ON o.tableId = t.id " +
+           "LEFT JOIN User u ON o.waiterId = u.id " +
+           "WHERE o.orderStatus = 'CONFIRMED' " +
+           "ORDER BY o.createdAt DESC LIMIT 1")
+    OrdersDto getOrderForSocket();
+
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.menuItemsId,oi.quantity,oi.specialInstructions,oi.status,m.name, " +
+           "oi.unitPrice, oi.totalPrice,m.price,m.imageUrl,m.preparationTime,oi.isRetail) " +
+           "FROM OrderItems oi " +
+           "LEFT JOIN MenuItems m ON oi.menuItemsId = m.id " +
+           "WHERE oi.orderId = :id " +
+           "ORDER BY oi.createdAt DESC")
+    Set<OrderItemsDto> getOrderItemsUnderOrderForSocket(Long id);
+
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.menuItemsId,oi.quantity,oi.specialInstructions,oi.status,m.name, " +
            "oi.unitPrice, oi.totalPrice,oi.createdAt,oi.updatedAt,m.price,m.imageUrl,m.preparationTime,oi.isRetail) " +
            "FROM OrderItems oi " +

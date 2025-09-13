@@ -50,4 +50,20 @@ public class OrderItemsDto {
         this.preparationTime = preparationTime;
         this.isRetail = isRetail;
     }
+
+    public OrderItemsDto(Long id, Long menuItemsId, Integer quantity, String specialInstructions, OrderStatus orderStatus,String name,
+                         Double unitPrice,Double totalPrice,Double price,String imageUrl,Integer preparationTime, Boolean isRetail) {
+        this.id = id;
+        this.menuItemsId = menuItemsId;
+        this.quantity = quantity;
+        this.specialInstructions = specialInstructions;
+        this.status = orderStatus != null ? orderStatus.getMappedValue() : null;
+        this.menuItemName = name;
+        this.unitPrice = unitPrice;
+        this.totalPrice = totalPrice;
+        this.menuItemPrice = price;
+        this.imageUrl = imageUrl;
+        this.preparationTime = preparationTime;
+        this.isRetail = isRetail;
+    }
 }

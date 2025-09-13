@@ -173,7 +173,16 @@ public class OrdersService {
                         .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
                         .sum();
 
-                Double total = subTotal + ordersDto.getTaxAmount() - ordersDto.getDiscountAmount();
+                Double total = 0.0;
+                if (ordersDto.getTaxAmount() != null && ordersDto.getDiscountAmount() != null) {
+                    total = subTotal + ordersDto.getTaxAmount() - ordersDto.getDiscountAmount();
+                } else if (ordersDto.getTaxAmount() != null && ordersDto.getDiscountAmount() == null) {
+                    total = subTotal + ordersDto.getTaxAmount();
+                } else if (ordersDto.getTaxAmount() == null && ordersDto.getDiscountAmount() != null) {
+                    total = subTotal - ordersDto.getDiscountAmount();
+                } else {
+                    total = subTotal;
+                }
                 ordersDto.setSubTotal(subTotal);
                 ordersDto.setTotalAmount(total);
 
@@ -252,7 +261,9 @@ public class OrdersService {
 
         ordersRepository.save(existingOrder);
 
-        webSocketChannelInterceptor.notifyKitchen();
+        if (ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
+            webSocketChannelInterceptor.notifyKitchen();
+        }
 
         return new ResponseDto("Order updated successfully");
     }

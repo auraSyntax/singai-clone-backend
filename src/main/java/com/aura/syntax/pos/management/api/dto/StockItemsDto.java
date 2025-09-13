@@ -1,6 +1,7 @@
 package com.aura.syntax.pos.management.api.dto;
 
 import com.aura.syntax.pos.management.enums.Type;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StockItemsDto {
     private Long id;
     private Long productId;
@@ -21,14 +23,17 @@ public class StockItemsDto {
     private Long menuItemId;
     private Boolean isActive;
 
-//    public StockItemsDto(Long id, String name, Integer currentStock, Integer minimumStock, Type type, Long menuItemId, String unit, Boolean isActive) {
-//        this.id = id;
-//        this.name = name;
-//        this.currentStock = currentStock;
-//        this.minimumStock = minimumStock;
-//        this.type = type.getMappedValue();
-//        this.menuItemId = menuItemId;
-//        this.unit = unit;
-//        this.isActive = isActive;
-//    }
+    private String productName;
+
+    public StockItemsDto(Long id, Integer quantity, Double costPerUnit,
+                         String unit, Double salesPrice,
+                         Double retailPrice, String productName) {
+        this.id = id;
+        this.quantity = quantity;
+        this.costPerUnit = costPerUnit;
+        this.unit = unit;
+        this.salesPrice = salesPrice;
+        this.retailPrice = retailPrice;
+        this.productName = productName;
+    }
 }
