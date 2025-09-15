@@ -66,4 +66,10 @@ public class OrderItemsDto {
         this.preparationTime = preparationTime;
         this.isRetail = isRetail;
     }
+
+    public OrderItemsDto(Long id, Integer quantity, Double unitPrice) {
+        this.id = id;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 }

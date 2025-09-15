@@ -57,4 +57,12 @@ public class OrdersDto {
         this.tableName = tableName;
         this.waiterName = waiterName;
     }
+
+    public OrdersDto(Long id, Double subTotal, Double taxAmount, Double discountAmount,PaymentMethod paymentMethod) {
+        this.id = id;
+        this.subTotal = subTotal;
+        this.taxAmount = taxAmount;
+        this.discountAmount = discountAmount;
+        this.paymentMethod = paymentMethod != null ? paymentMethod.getMappedValue() : null;
+    }
 }

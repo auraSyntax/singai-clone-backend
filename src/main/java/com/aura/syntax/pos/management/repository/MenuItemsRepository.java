@@ -29,4 +29,9 @@ public interface MenuItemsRepository extends JpaRepository<MenuItems,Long> {
     @Query("SELECT m.name FROM MenuItems m " +
            "WHERE m.id = :menuItemsId")
     String getMenuItemById(Long menuItemsId);
+
+    @Query("SELECT m.imageUrl FROM MenuItems m " +
+           "WHERE m.id = :menuItemsId")
+    String getMenuItemImageById(Long menuItemsId);
+
 }

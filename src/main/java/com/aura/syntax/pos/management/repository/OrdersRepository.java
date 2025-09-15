@@ -70,4 +70,19 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
             AND o.orderStatus = 'CONFIRMED'
             """)
     List<OrdersWebSocketDto> getAllOrdersForKitchen(LocalDateTime startOfDay,LocalDateTime endOfDay);
+
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id,o.subTotal,o.discountAmount,o.taxAmount,o.paymentMethod) " +
+           "FROM Orders o " +
+           "WHERE DATE(o.updatedAt) BETWEEN :startDate AND :endDate " +
+           "AND o.paymentStatus = 'PAID' " +
+           "ORDER BY o.createdAt DESC")
+    List<OrdersDto> getAllOrders(LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrderItemsDto(oi.id,oi.quantity, " +
+           "oi.unitPrice) " +
+           "FROM OrderItems oi " +
+           "LEFT JOIN MenuItems m ON oi.menuItemsId = m.id " +
+           "WHERE oi.orderId = :id " +
+           "ORDER BY oi.createdAt DESC")
+    List<OrderItemsDto> getAllOrderItemsByOrder(Long id);
 }
