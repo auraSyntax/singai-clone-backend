@@ -1,6 +1,9 @@
 package com.aura.syntax.pos.management.service;
 
-import com.aura.syntax.pos.management.api.dto.*;
+import com.aura.syntax.pos.management.api.dto.MenuItemIncredientsDto;
+import com.aura.syntax.pos.management.api.dto.MenuItemsDto;
+import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
+import com.aura.syntax.pos.management.api.dto.ResponseDto;
 import com.aura.syntax.pos.management.entity.Categories;
 import com.aura.syntax.pos.management.entity.MenuItemIngredients;
 import com.aura.syntax.pos.management.entity.MenuItems;
@@ -36,7 +39,7 @@ public class MenuItemsService {
 
     public ResponseDto addMenuItem(MenuItemsDto menuItemsDto) {
         Categories categories = categoryRepository.findById(menuItemsDto.getCategoryId()).orElseThrow(() -> new
-                ServiceException("Category not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Category not found", "Bad request", HttpStatus.BAD_REQUEST));
 
         MenuItems menuItems = MenuItems.builder()
                 .id(menuItemsDto.getId())
@@ -72,25 +75,19 @@ public class MenuItemsService {
 
     }
 
-    public List<MenuItemsDto> getAllMenuItems(Long categoryId,String search) {
-        List<MenuItemsDto> menuItemsDtoList = menuItemsRepository.getAllMenuItems(categoryId,search);
-        menuItemsDtoList.stream().forEach(menuItemsDto -> {
-            menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
-            menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
-        });
-
-        return menuItemsDtoList;
+    public List<MenuItemsDto> getAllMenuItems(Long categoryId, String search) {
+        return menuItemsRepository.getAllMenuItems(categoryId, search, imagePath);
     }
 
     public PaginatedResponseDto<MenuItemsDto> getAllMenuItemsPagination(Integer page, Integer size, String search, Long categoryId) {
-        Pageable pageable = PageRequest.of(page - 1,size);
-        Page<MenuItemsDto> menuItemsDtos = menuItemsRepository.getAllMenuItemsPagination(pageable,search,categoryId);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<MenuItemsDto> menuItemsDtos = menuItemsRepository.getAllMenuItemsPagination(pageable, search, categoryId,imagePath);
         PaginatedResponseDto<MenuItemsDto> menuItemsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<MenuItemsDto> menuItemsDtoList = menuItemsDtos.getContent();
-        menuItemsDtoList.stream().forEach(menuItemsDto -> {
-            menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
-            menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
-        });
+//        menuItemsDtoList.stream().forEach(menuItemsDto -> {
+//            menuItemsDto.setCategoryName(categoryRepository.getCategoryNameById(menuItemsDto.getCategoryId()));
+//            menuItemsDto.setImageUrl(menuItemsDto.getImageUrl() != null ? imagePath + menuItemsDto.getImageUrl() : null);
+//        });
         menuItemsDtoPaginatedResponseDto.setData(menuItemsDtoList);
         menuItemsDtoPaginatedResponseDto.setCurrentPage(page);
         menuItemsDtoPaginatedResponseDto.setTotalPages(menuItemsDtos.getTotalPages());
@@ -101,7 +98,7 @@ public class MenuItemsService {
 
     public MenuItemsDto getMenuItemById(Long id) {
         MenuItems menuItems = menuItemsRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Menu Item not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Menu Item not found", "Bad request", HttpStatus.BAD_REQUEST));
         return MenuItemsDto.builder()
                 .id(menuItems.getId())
                 .name(menuItems.getName())
@@ -117,7 +114,7 @@ public class MenuItemsService {
 
     public ResponseDto updateMenuItem(MenuItemsDto menuItemsDto) {
         MenuItems existingMenuItem = menuItemsRepository.findById(menuItemsDto.getId()).orElseThrow(() -> new
-                ServiceException("Menu Item not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Menu Item not found", "Bad request", HttpStatus.BAD_REQUEST));
         existingMenuItem.setId(menuItemsDto.getId());
         existingMenuItem.setName(menuItemsDto.getName());
         existingMenuItem.setDescription(menuItemsDto.getDescription());
@@ -129,8 +126,8 @@ public class MenuItemsService {
                 menuItemsDto.getMenuItemIncredientsDtos().stream()
                         .map(menuItemIncredientsDto -> {
                             MenuItemIngredients existingMenuItemStock = menuItemStockRepository.findById(menuItemIncredientsDto.getId())
-                                    .orElseThrow(() -> new ServiceException("Menu item stock not found","Bad request",HttpStatus.BAD_REQUEST));
-                            updateMenuItemIncredients(menuItemIncredientsDto,existingMenuItemStock);
+                                    .orElseThrow(() -> new ServiceException("Menu item stock not found", "Bad request", HttpStatus.BAD_REQUEST));
+                            updateMenuItemIncredients(menuItemIncredientsDto, existingMenuItemStock);
 
                             return existingMenuItemStock;
                         })
@@ -151,7 +148,7 @@ public class MenuItemsService {
 
     public ResponseDto updateStatus(Long id, String status) {
         MenuItems existingMenuItems = menuItemsRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Menu Item not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Menu Item not found", "Bad request", HttpStatus.BAD_REQUEST));
 
         existingMenuItems.setStatus(Status.fromMappedValue(status));
         menuItemsRepository.save(existingMenuItems);
@@ -160,7 +157,7 @@ public class MenuItemsService {
 
     public ResponseDto deleteMenuItem(Long id) {
         MenuItems existingMenuItems = menuItemsRepository.findById(id).orElseThrow(() -> new
-                ServiceException("Menu Item not found","Bad request", HttpStatus.BAD_REQUEST));
+                ServiceException("Menu Item not found", "Bad request", HttpStatus.BAD_REQUEST));
         menuItemsRepository.deleteById(id);
         return new ResponseDto("Menu Item deleted successfully");
     }

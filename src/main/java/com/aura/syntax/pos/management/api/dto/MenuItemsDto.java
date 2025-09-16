@@ -32,7 +32,8 @@ public class MenuItemsDto {
     private Set<OrderItemsDto> orderItemsDtos;
     private String categoryName;
 
-    public MenuItemsDto(Long id, String name, String description, Double price, String imageUrl, Integer preparationTime, Status status,Long categoryId) {
+    public MenuItemsDto(Long id, String name, String description, Double price, String imageUrl, Integer preparationTime,
+                        Status status,Long categoryId,String categoryName) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,5 +42,6 @@ public class MenuItemsDto {
         this.preparationTime = preparationTime;
         this.status = status.getMappedValue();
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 }

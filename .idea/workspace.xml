@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/MenuItemsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/MenuItemsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/MenuItemsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/MenuItemsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/MenuItemsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/MenuItemsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/OrdersService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
@@ -162,14 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751689485989</updated>
-    </task>
-    <task id="LOCAL-00001" summary="commitn1">
-      <option name="closed" value="true" />
-      <created>1752252475241</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1752252475241</updated>
     </task>
     <task id="LOCAL-00002" summary="commitn1">
       <option name="closed" value="true" />
@@ -555,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757913981323</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1757994546332</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1757994546332</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -567,7 +571,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/MenuItemsService.java</url>
-          <line>130</line>
+          <line>127</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
