@@ -165,8 +165,7 @@ public class OrdersService {
 
         List<OrdersDto> ordersDtoList = ordersDtos.getContent();
         ordersDtoList.stream().forEach(ordersDto -> {
-            Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId());
-
+            Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId(),search);
 
             orderItemsDtos.stream().forEach(orderItemsDto -> {
                 orderItemsDto.setImageUrl(orderItemsDto.getImageUrl() != null ? imagePath + orderItemsDto.getImageUrl() : null);

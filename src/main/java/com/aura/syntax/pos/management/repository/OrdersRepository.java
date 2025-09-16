@@ -55,8 +55,9 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "FROM OrderItems oi " +
            "LEFT JOIN MenuItems m ON oi.menuItemsId = m.id " +
            "WHERE oi.orderId = :id " +
+           "AND :search IS NULL OR m.name LIKE LOWER(CONCAT('%',:search,'%')) " +
            "ORDER BY oi.createdAt DESC")
-    Set<OrderItemsDto> getAllOrderItems(Long id);
+    Set<OrderItemsDto> getAllOrderItems(Long id,String search);
 
     @Query("SELECT oi " +
            "FROM OrderItems oi " +
