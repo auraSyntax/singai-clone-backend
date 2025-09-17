@@ -153,7 +153,8 @@ public class OrdersService {
                 .unitPrice(orderItems.getUnitPrice())
                 .totalPrice(orderItems.getTotalPrice())
                 .isRetail(orderItems.getIsRetail())
-                .imageUrl(imagePath + menuItemsRepository.getMenuItemImageById(orderItems.getMenuItemsId()))
+                .imageUrl(menuItemsRepository.getMenuItemImageById(orderItems.getMenuItemsId()) != null ?
+                        imagePath + menuItemsRepository.getMenuItemImageById(orderItems.getMenuItemsId()) : null)
                 .status(orderItems.getStatus() != null ? orderItems.getStatus().getMappedValue() : null)
                 .build();
     }
