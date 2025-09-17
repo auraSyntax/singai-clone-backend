@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -36,10 +37,13 @@ public class OrdersDto {
     private String waiterName;
     private Double totalAmount;
     private Integer orderPreparationTime;
+    private String createdAt;
+    private String updatedAt;
 
     public OrdersDto(Long id, String orderNumber, Long tableId, Long waiterId, OrderType orderType, OrderStatus orderStatus,
                      PaymentMethod paymentMethod, PaymentStatus paymentStatus, String customerName, String customerPhone, String notes, Double subTotal,
-                     Double taxAmount, Double discountAmount, String tableName, String waiterName) {
+                     Double taxAmount, Double discountAmount, String tableName, String waiterName,
+                     LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.tableId = tableId;
@@ -56,6 +60,8 @@ public class OrdersDto {
         this.discountAmount = discountAmount;
         this.tableName = tableName;
         this.waiterName = waiterName;
+        this.createdAt = createdAt != null ? createdAt.toString() : null;
+        this.updatedAt = updatedAt != null ? updatedAt.toString() : null;
     }
 
     public OrdersDto(Long id, Double subTotal, Double taxAmount, Double discountAmount,PaymentMethod paymentMethod) {

@@ -23,8 +23,8 @@ public class OrderItemsDto {
     private Double totalPrice;
     private String status;
     private String specialInstructions;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String menuItemName;
 
     private Double menuItemPrice;
@@ -43,8 +43,8 @@ public class OrderItemsDto {
         this.menuItemName = name;
         this.unitPrice = unitPrice;
         this.totalPrice = totalPrice;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = createdAt != null ? createdAt.toString() : null;
+        this.updatedAt = updatedAt != null ? updatedAt.toString() : null;
         this.menuItemPrice = price;
         this.imageUrl = imageUrl;
         this.preparationTime = preparationTime;

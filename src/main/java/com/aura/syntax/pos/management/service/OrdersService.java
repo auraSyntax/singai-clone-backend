@@ -149,7 +149,7 @@ public class OrdersService {
                 .menuItemName(menuItemsRepository.getMenuItemById(orderItems.getMenuItemsId()))
                 .quantity(orderItems.getQuantity())
                 .specialInstructions(orderItems.getSpecialInstructions())
-                .createdAt(LocalDateTime.now())
+                .createdAt(orderItems.getCreatedAt().toString())
                 .unitPrice(orderItems.getUnitPrice())
                 .totalPrice(orderItems.getTotalPrice())
                 .isRetail(orderItems.getIsRetail())
