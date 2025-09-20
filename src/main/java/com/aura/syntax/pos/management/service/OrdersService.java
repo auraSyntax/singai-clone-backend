@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -159,45 +160,64 @@ public class OrdersService {
                 .build();
     }
 
-    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus, String search) {
+    public PaginatedResponseDto<OrdersDto> getAllOrdersPagination(Integer page, Integer size, Long waiterId, String orderType, String orderStatus,
+                                                                  String search, String paymentMethod, LocalDate startDate, LocalDate endDate) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<OrdersDto> ordersDtos = ordersRepository.getAllOrdersPagination(pageable, waiterId, orderType != null && !orderType.isEmpty() ?
-                OrderType.fromMappedValue(orderType) : null, orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null, search);
+        Page<OrdersDto> ordersDtos = ordersRepository.getAllOrdersPagination(pageable,
+                waiterId,
+                orderType != null && !orderType.isEmpty() ? OrderType.fromMappedValue(orderType) : null,
+                orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null,
+                search,
+                paymentMethod != null && !paymentMethod.isEmpty() ? PaymentMethod.fromMappedValue(paymentMethod) : null,
+                startDate,
+                endDate);
 
         List<OrdersDto> ordersDtoList = ordersDtos.getContent();
-        ordersDtoList.stream().forEach(ordersDto -> {
-            Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId(),search);
 
-            orderItemsDtos.stream().forEach(orderItemsDto -> {
+        ordersDtoList.forEach(ordersDto -> {
+            Set<OrderItemsDto> orderItemsDtos = ordersRepository.getAllOrderItems(ordersDto.getId(), search);
+
+            orderItemsDtos.forEach(orderItemsDto -> {
                 orderItemsDto.setImageUrl(orderItemsDto.getImageUrl() != null ? imagePath + orderItemsDto.getImageUrl() : null);
-                Double subTotal = orderItemsDtos.stream()
-                        .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
-                        .sum();
-
-                Double total = 0.0;
-                if (ordersDto.getTaxAmount() != null && ordersDto.getDiscountAmount() != null) {
-                    total = subTotal + ordersDto.getTaxAmount() - ordersDto.getDiscountAmount();
-                } else if (ordersDto.getTaxAmount() != null && ordersDto.getDiscountAmount() == null) {
-                    total = subTotal + ordersDto.getTaxAmount();
-                } else if (ordersDto.getTaxAmount() == null && ordersDto.getDiscountAmount() != null) {
-                    total = subTotal - ordersDto.getDiscountAmount();
-                } else {
-                    total = subTotal;
-                }
-                ordersDto.setSubTotal(subTotal);
-                ordersDto.setTotalAmount(total);
-
-                Integer avgPreparationTime = 0;
-                if (orderItemsDtos != null && !orderItemsDtos.isEmpty()) {
-                    Integer totalPrepTime = orderItemsDtos.stream()
-                            .mapToInt(item -> item.getPreparationTime() != null ? item.getPreparationTime() : 0)
-                            .sum();
-                    avgPreparationTime = totalPrepTime / orderItemsDtos.size();
-                }
-                ordersDto.setOrderPreparationTime(avgPreparationTime);
             });
+
+            Double subTotal = orderItemsDtos.stream()
+                    .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
+                    .sum();
+
+            Double total = subTotal;
+            if (ordersDto.getTaxAmount() != null) {
+                total += ordersDto.getTaxAmount();
+            }
+            if (ordersDto.getDiscountAmount() != null) {
+                total -= ordersDto.getDiscountAmount();
+            }
+
+            ordersDto.setSubTotal(subTotal);
+            ordersDto.setTotalAmount(total);
+
+            if (!orderItemsDtos.isEmpty()) {
+                int totalPrepTime = orderItemsDtos.stream()
+                        .mapToInt(item -> item.getPreparationTime() != null ? item.getPreparationTime() : 0)
+                        .sum();
+                ordersDto.setOrderPreparationTime(totalPrepTime / orderItemsDtos.size());
+            } else {
+                ordersDto.setOrderPreparationTime(0);
+            }
+
             ordersDto.setOrderItemsDtos(orderItemsDtos);
         });
+
+        Double grandTotal = ordersRepository.getGrandTotal(
+                waiterId,
+                orderType != null && !orderType.isEmpty() ? OrderType.fromMappedValue(orderType) : null,
+                orderStatus != null && !orderStatus.isEmpty() ? OrderStatus.fromMappedValue(orderStatus) : null,
+                search,
+                paymentMethod != null && !paymentMethod.isEmpty() ? PaymentMethod.fromMappedValue(paymentMethod) : null,
+                startDate,
+                endDate
+        );
+
         PaginatedResponseDto<OrdersDto> ordersDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         ordersDtoPaginatedResponseDto.setData(ordersDtoList);
         ordersDtoPaginatedResponseDto.setCurrentPage(page);
@@ -206,8 +226,12 @@ public class OrdersService {
         ordersDtoPaginatedResponseDto.setPageSize(size);
         ordersDtoPaginatedResponseDto.setHasPrevious(page > 1);
         ordersDtoPaginatedResponseDto.setHasNext(page < ordersDtos.getTotalPages());
+
+        ordersDtoPaginatedResponseDto.setGrandTotal(grandTotal);
+
         return ordersDtoPaginatedResponseDto;
     }
+
 
     public ResponseDto updateOrders(OrdersDto ordersDto) {
         Orders existingOrder = ordersRepository.findById(ordersDto.getId()).orElseThrow(() ->

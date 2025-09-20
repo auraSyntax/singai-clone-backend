@@ -8,6 +8,8 @@ import com.aura.syntax.pos.management.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("api/v1/orders")
 @RequiredArgsConstructor
@@ -32,8 +34,11 @@ public class OrdersController {
                                                                  @RequestParam(value = "waiterId",required = false) Long waiterId,
                                                                  @RequestParam(value = "orderType",required = false) String orderType,
                                                                  @RequestParam(value = "orderStatus",required = false) String orderStatus,
-                                                                  @RequestParam(value = "search",required = false) String search){
-        return ordersService.getAllOrdersPagination(page,size,waiterId,orderType,orderStatus,search);
+                                                                  @RequestParam(value = "search",required = false) String search,
+                                                                  @RequestParam(value = "paymentMethod",required = false) String paymentMethod,
+                                                                  @RequestParam(value = "startDate",required = false) LocalDate startDate,
+                                                                  @RequestParam(value = "endDate",required = false) LocalDate endDate){
+        return ordersService.getAllOrdersPagination(page,size,waiterId,orderType,orderStatus,search,paymentMethod,startDate,endDate);
     }
 
     @PutMapping

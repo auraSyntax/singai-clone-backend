@@ -7,6 +7,7 @@ import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
 import com.aura.syntax.pos.management.enums.OrderStatus;
 import com.aura.syntax.pos.management.enums.OrderType;
+import com.aura.syntax.pos.management.enums.PaymentMethod;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,11 @@ import java.util.Set;
 
 public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes,o.subTotal,o.discountAmount,o.taxAmount,t.tableNumber, u.lastName AS waiterName,o.createdAt,o.updatedAt) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(" +
+           "o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, " +
+           "o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes, " +
+           "o.subTotal, o.discountAmount, o.taxAmount, t.tableNumber, u.lastName AS waiterName, " +
+           "o.createdAt, o.updatedAt) " +
            "FROM Orders o " +
            "LEFT JOIN Tables t ON o.tableId = t.id " +
            "LEFT JOIN User u ON o.waiterId = u.id " +
@@ -27,12 +32,43 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "AND (:orderType IS NULL OR o.orderType = :orderType) " +
            "AND (:orderStatus IS NULL OR o.orderStatus = :orderStatus) " +
            "AND (:search IS NULL OR (" +
-           "    LOWER(o.orderNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-           "    LOWER(o.customerName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-           "    LOWER(o.customerPhone) LIKE LOWER(CONCAT('%', :search, '%'))" +
-           "))" +
+           "   LOWER(o.orderNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "   LOWER(o.customerName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "   LOWER(o.customerPhone) LIKE LOWER(CONCAT('%', :search, '%'))" +
+           ")) " +
+           "AND (:paymentMethod IS NULL OR o.paymentMethod = :paymentMethod) " +
+           "AND (:startDate IS NULL OR FUNCTION('DATE', o.updatedAt) >= :startDate) " +
+           "AND (:endDate IS NULL OR FUNCTION('DATE', o.updatedAt) <= :endDate) " +
            "ORDER BY o.createdAt DESC")
-    Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType, OrderStatus orderStatus,String search);
+    Page<OrdersDto> getAllOrdersPagination(Pageable pageable, Long waiterId, OrderType orderType,
+                                           OrderStatus orderStatus, String search,
+                                           PaymentMethod paymentMethod, LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT COALESCE(SUM( " +
+           "   (oi.quantity * oi.unitPrice) + " +
+           "   COALESCE(o.taxAmount, 0) - " +
+           "   COALESCE(o.discountAmount, 0) " +
+           "), 0) " +
+           "FROM Orders o " +
+           "JOIN o.orderItems oi " +
+           "WHERE (:waiterId IS NULL OR o.waiterId = :waiterId) " +
+           "AND (:orderType IS NULL OR o.orderType = :orderType) " +
+           "AND (:orderStatus IS NULL OR o.orderStatus = :orderStatus) " +
+           "AND (:search IS NULL OR (" +
+           "   LOWER(o.orderNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "   LOWER(o.customerName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "   LOWER(o.customerPhone) LIKE LOWER(CONCAT('%', :search, '%'))" +
+           ")) " +
+           "AND (:paymentMethod IS NULL OR o.paymentMethod = :paymentMethod) " +
+           "AND (:startDate IS NULL OR FUNCTION('DATE', o.updatedAt) >= :startDate) " +
+           "AND (:endDate IS NULL OR FUNCTION('DATE', o.updatedAt) <= :endDate)")
+    Double getGrandTotal(Long waiterId,
+                         OrderType orderType,
+                         OrderStatus orderStatus,
+                         String search,
+                         PaymentMethod paymentMethod,
+                         LocalDate startDate,
+                         LocalDate endDate);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes,o.subTotal,o.discountAmount,o.taxAmount,t.tableNumber, u.lastName AS waiterName,o.createdAt,o.updatedAt) " +
            "FROM Orders o " +
