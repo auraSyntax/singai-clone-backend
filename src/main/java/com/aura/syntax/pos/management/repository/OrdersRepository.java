@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-public interface OrdersRepository extends JpaRepository<Orders,Long> {
+public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(" +
            "o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, " +
@@ -93,7 +93,7 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "WHERE oi.orderId = :id " +
            "AND :search IS NULL OR m.name LIKE LOWER(CONCAT('%',:search,'%')) " +
            "ORDER BY oi.createdAt DESC")
-    Set<OrderItemsDto> getAllOrderItems(Long id,String search);
+    Set<OrderItemsDto> getAllOrderItems(Long id, String search);
 
     @Query("SELECT oi " +
            "FROM OrderItems oi " +
@@ -106,7 +106,7 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
             WHERE o.createdAt BETWEEN :startOfDay AND :endOfDay
             AND o.orderStatus = 'CONFIRMED'
             """)
-    List<OrdersWebSocketDto> getAllOrdersForKitchen(LocalDateTime startOfDay,LocalDateTime endOfDay);
+    List<OrdersWebSocketDto> getAllOrdersForKitchen(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.OrdersDto(o.id,o.subTotal,o.discountAmount,o.taxAmount,o.paymentMethod) " +
            "FROM Orders o " +
@@ -122,4 +122,41 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
            "WHERE oi.orderId = :id " +
            "ORDER BY oi.createdAt DESC")
     List<OrderItemsDto> getAllOrderItemsByOrder(Long id);
+
+
+    @Query("SELECT COUNT(o.id) FROM Orders o WHERE o.orderStatus = 'COMPLETED'")
+    Integer getTotalBills();
+
+    @Query("SELECT COUNT(o.id) FROM Orders o WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.orderStatus = 'COMPLETED'")
+    Integer getTodayBills();
+
+    @Query("SELECT COUNT(o) FROM Orders o WHERE o.paymentMethod = :method")
+    Integer getTotalBillsByPayment(PaymentMethod method);
+
+    @Query("SELECT COUNT(o) FROM Orders o WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.paymentMethod = :method")
+    Integer getTodayBillsByPayment(PaymentMethod method);
+
+    @Query("SELECT COALESCE(SUM(oi.unitPrice * oi.quantity), 0) + " +
+           "       COALESCE(SUM(o.taxAmount), 0) - COALESCE(SUM(o.discountAmount), 0) " +
+           "FROM Orders o JOIN o.orderItems oi")
+    Double getTotalSales();
+
+    @Query("SELECT COALESCE(SUM(oi.unitPrice * oi.quantity), 0) + " +
+           "       COALESCE(SUM(o.taxAmount), 0) - COALESCE(SUM(o.discountAmount), 0) " +
+           "FROM Orders o JOIN o.orderItems oi " +
+           "WHERE o.paymentMethod = :method")
+    Double getTotalSalesByPayment(PaymentMethod method);
+
+    @Query("SELECT COALESCE(SUM(oi.unitPrice * oi.quantity), 0) + " +
+           "       COALESCE(SUM(o.taxAmount), 0) - COALESCE(SUM(o.discountAmount), 0) " +
+           "FROM Orders o JOIN o.orderItems oi " +
+           "WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE")
+    Double getTodaySales();
+
+    @Query("SELECT COALESCE(SUM(oi.unitPrice * oi.quantity), 0) + " +
+           "       COALESCE(SUM(o.taxAmount), 0) - COALESCE(SUM(o.discountAmount), 0) " +
+           "FROM Orders o JOIN o.orderItems oi " +
+           "WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.paymentMethod = :method")
+    Double getTodaySalesByPayment(PaymentMethod method);
+
 }

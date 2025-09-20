@@ -1,9 +1,6 @@
 package com.aura.syntax.pos.management.api.controller;
 
-import com.aura.syntax.pos.management.api.dto.OrdersDto;
-import com.aura.syntax.pos.management.api.dto.PaginatedResponseDto;
-import com.aura.syntax.pos.management.api.dto.ResponseDto;
-import com.aura.syntax.pos.management.api.dto.SaveOrderResponseDto;
+import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +58,10 @@ public class OrdersController {
     @DeleteMapping
     public ResponseDto deleteOrder(@RequestParam(value = "id") Long id){
         return ordersService.deleteOrder(id);
+    }
+
+    @GetMapping("/dashboard")
+    public OrderSummaryDto getOrderSummary(){
+        return ordersService.getOrderSummary();
     }
 }

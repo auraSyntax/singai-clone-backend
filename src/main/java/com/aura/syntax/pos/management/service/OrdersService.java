@@ -16,11 +16,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -356,4 +359,49 @@ public class OrdersService {
         ordersRepository.deleteById(id);
         return new ResponseDto("Order deleted successfully");
     }
+
+    public OrderSummaryDto getOrderSummary() {
+        OrderSummaryDto summary = new OrderSummaryDto();
+
+        // ---- Total Bills ----
+        TotalBillsDto totalBillsDto = new TotalBillsDto();
+        totalBillsDto.setTotalBills(ordersRepository.getTotalBills());
+        totalBillsDto.setByCard(ordersRepository.getTotalBillsByPayment(PaymentMethod.CARD));
+        totalBillsDto.setByCash(ordersRepository.getTotalBillsByPayment(PaymentMethod.CASH));
+        totalBillsDto.setByUpi(ordersRepository.getTotalBillsByPayment(PaymentMethod.UPI));
+        totalBillsDto.setByOther(ordersRepository.getTotalBillsByPayment(PaymentMethod.OTHER));
+
+        // ---- Today Bills ----
+        TodayBillsDto todayBillsDto = new TodayBillsDto();
+        todayBillsDto.setTotalBills(ordersRepository.getTodayBills());
+        todayBillsDto.setByCard(ordersRepository.getTodayBillsByPayment(PaymentMethod.CARD));
+        todayBillsDto.setByCash(ordersRepository.getTodayBillsByPayment(PaymentMethod.CASH));
+        todayBillsDto.setByUpi(ordersRepository.getTodayBillsByPayment(PaymentMethod.UPI));
+        todayBillsDto.setByOther(ordersRepository.getTodayBillsByPayment(PaymentMethod.OTHER));
+
+        // ---- Total Sales ----
+        TotalSalesDto totalSalesDto = new TotalSalesDto();
+        totalSalesDto.setTotalAmount(ordersRepository.getTotalSales());
+        totalSalesDto.setByCard(ordersRepository.getTotalSalesByPayment(PaymentMethod.CARD));
+        totalSalesDto.setByCash(ordersRepository.getTotalSalesByPayment(PaymentMethod.CASH));
+        totalSalesDto.setByUpi(ordersRepository.getTotalSalesByPayment(PaymentMethod.UPI));
+        totalSalesDto.setByOther(ordersRepository.getTotalSalesByPayment(PaymentMethod.OTHER));
+
+        // ---- Today Sales ----
+        TodaySalesDto todaySalesDto = new TodaySalesDto();
+        todaySalesDto.setTotalAmount(ordersRepository.getTodaySales());
+        todaySalesDto.setByCard(ordersRepository.getTodaySalesByPayment(PaymentMethod.CARD));
+        todaySalesDto.setByCash(ordersRepository.getTodaySalesByPayment(PaymentMethod.CASH));
+        todaySalesDto.setByUpi(ordersRepository.getTodaySalesByPayment(PaymentMethod.UPI));
+        todaySalesDto.setByOther(ordersRepository.getTodaySalesByPayment(PaymentMethod.OTHER));
+
+        // ---- Set into summary ----
+        summary.setTotalBillsDto(totalBillsDto);
+        summary.setTodayBillsDto(todayBillsDto);
+        summary.setTotalSalesDto(totalSalesDto);
+        summary.setTodaySalesDto(todaySalesDto);
+
+        return summary;
+    }
+
 }
