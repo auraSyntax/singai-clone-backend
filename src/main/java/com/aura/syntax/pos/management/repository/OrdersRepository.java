@@ -130,10 +130,10 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
     @Query("SELECT COUNT(o.id) FROM Orders o WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.orderStatus = 'COMPLETED'")
     Integer getTodayBills();
 
-    @Query("SELECT COUNT(o) FROM Orders o WHERE o.paymentMethod = :method")
+    @Query("SELECT COUNT(o) FROM Orders o WHERE o.paymentMethod = :method AND o.orderStatus = 'COMPLETED'")
     Integer getTotalBillsByPayment(PaymentMethod method);
 
-    @Query("SELECT COUNT(o) FROM Orders o WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.paymentMethod = :method")
+    @Query("SELECT COUNT(o) FROM Orders o WHERE FUNCTION('DATE', o.createdAt) = CURRENT_DATE AND o.paymentMethod = :method AND o.orderStatus = 'COMPLETED'")
     Integer getTodayBillsByPayment(PaymentMethod method);
 
     @Query("SELECT COALESCE(SUM(oi.unitPrice * oi.quantity), 0) + " +
