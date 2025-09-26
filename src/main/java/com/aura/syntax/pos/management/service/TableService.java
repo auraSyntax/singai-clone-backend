@@ -100,6 +100,9 @@ public class TableService {
     public ResponseDto deleteTable(Long id) {
         Tables table = tablesRepository.findById(id)
                 .orElseThrow(() -> new ServiceException("Table not found","Bad request", HttpStatus.BAD_REQUEST));
+        if (table.getTableStatus().getMappedValue().equals(TableStatus.OCCUPIED.getMappedValue()) || table.getTableStatus().getMappedValue().equals(TableStatus.RESERVED.getMappedValue())){
+            throw new ServiceException("Table already " + table.getTableStatus().getMappedValue(),"Bad request",HttpStatus.BAD_REQUEST);
+        }
         tablesRepository.deleteById(id);
         return new ResponseDto("Table deleted successfully");
 

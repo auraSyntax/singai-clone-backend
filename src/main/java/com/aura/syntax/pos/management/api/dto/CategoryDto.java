@@ -21,12 +21,13 @@ public class CategoryDto {
     private Long mainCategoryId;
     private String mainCategoryName;
 
-    public CategoryDto(Long id, String categoryName, String description, String imageUrl, Status status,Long mainCategoryId) {
+    public CategoryDto(Long id, String categoryName, String description, String imageUrl, Status status,Long mainCategoryId,String mainCategoryName) {
         this.id = id;
         this.categoryName = categoryName;
         this.description = description;
         this.imageUrl = imageUrl;
         this.status = status.getMappedValue();
         this.mainCategoryId = mainCategoryId;
+        this.mainCategoryName = mainCategoryName;
     }
 }

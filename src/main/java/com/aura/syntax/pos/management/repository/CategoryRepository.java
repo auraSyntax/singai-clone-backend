@@ -12,19 +12,25 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Categories, Long> {
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.CategoryDto(c.id,c.name,c.description,c.imageUrl,c.status,c.mainCategoryId) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.CategoryDto(c.id,c.name,c.description, " +
+           "CASE WHEN c.imageUrl IS NOT NULL THEN CONCAT(RTRIM(:imagePath), LTRIM(c.imageUrl)) ELSE NULL END, " +
+           "c.status,c.mainCategoryId,m.mainCategoryName) " +
            "FROM Categories c " +
-           "WHERE :mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId " +
+           "JOIN MainCategories m ON c.mainCategoryId = m.id " +
+           "WHERE (:mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId) " +
            "AND c.status = 'ACTIVE' " +
            "ORDER BY c.createdAt")
     List<CategoryDto> getAllCategories(Long mainCategoryId);
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.CategoryDto(c.id,c.name,c.description,c.imageUrl,c.status,c.mainCategoryId) " +
+    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.CategoryDto(c.id,c.name,c.description, " +
+           "CASE WHEN c.imageUrl IS NOT NULL THEN CONCAT(RTRIM(:imagePath), LTRIM(c.imageUrl)) ELSE NULL END, " +
+           "c.status,c.mainCategoryId,m.mainCategoryName) " +
            "FROM Categories c " +
-           "WHERE :search IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "AND :mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId " +
+           "JOIN MainCategories m ON c.mainCategoryId = m.id " +
+           "WHERE (:search IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%'))) " +
+           "AND (:mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId) " +
            "ORDER BY c.createdAt")
-    Page<CategoryDto> getAllCategoriesPagination(Pageable pageable, String search, Long mainCategoryId);
+    Page<CategoryDto> getAllCategoriesPagination(Pageable pageable, String search, Long mainCategoryId, String imagePath);
 
     @Query("SELECT c.name " +
            "FROM Categories c " +

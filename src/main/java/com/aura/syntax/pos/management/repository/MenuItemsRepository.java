@@ -26,8 +26,8 @@ public interface MenuItemsRepository extends JpaRepository<MenuItems,Long> {
            "CASE WHEN m.imageUrl IS NOT NULL THEN CONCAT(RTRIM(:imagePath),LTRIM(m.imageUrl)) ELSE NULL END AS imageUrl,m.preparationTime,m.status,m.categoryId,c.name) " +
            "FROM MenuItems m " +
            "JOIN Categories c ON m.categoryId = c.id " +
-           "WHERE :search IS NULL OR LOWER(m.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "AND :categoryId IS NULL OR m.categoryId = :categoryId " +
+           "WHERE (:search IS NULL OR LOWER(m.name) LIKE LOWER(CONCAT('%', :search, '%'))) " +
+           "AND (:categoryId IS NULL OR m.categoryId = :categoryId) " +
            "ORDER BY m.createdAt DESC")
     Page<MenuItemsDto> getAllMenuItemsPagination(Pageable pageable, String search, Long categoryId,String imagePath);
 

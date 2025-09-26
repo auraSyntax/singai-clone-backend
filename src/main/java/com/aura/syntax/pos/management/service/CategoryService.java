@@ -63,13 +63,13 @@ public class CategoryService {
 
     public PaginatedResponseDto<CategoryDto> getAllCategoriesPagination(Integer page, Integer size, String search,Long mainCategoryId) {
         Pageable pageable = PageRequest.of(page - 1,size);
-        Page<CategoryDto> categoryDtos = categoryRepository.getAllCategoriesPagination(pageable,search,mainCategoryId);
+        Page<CategoryDto> categoryDtos = categoryRepository.getAllCategoriesPagination(pageable,search,mainCategoryId,imagePath);
         PaginatedResponseDto<CategoryDto> categoryDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<CategoryDto> categories = categoryDtos.getContent();
-        categoryDtos.stream().forEach(categoryDto -> {
-            categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
-            categoryDto.setImageUrl(categoryDto.getImageUrl() != null ? imagePath + categoryDto.getImageUrl() : null);
-        });
+//        categoryDtos.stream().forEach(categoryDto -> {
+//            categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
+//            categoryDto.setImageUrl(categoryDto.getImageUrl() != null ? imagePath + categoryDto.getImageUrl() : null);
+//        });
         categoryDtoPaginatedResponseDto.setData(categories);
         categoryDtoPaginatedResponseDto.setCurrentPage(page);
         categoryDtoPaginatedResponseDto.setTotalPages(categoryDtos.getTotalPages());
