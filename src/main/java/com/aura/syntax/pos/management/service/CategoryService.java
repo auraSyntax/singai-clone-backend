@@ -52,12 +52,7 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getAllCategories(Long mainCategoryId) {
-        List<CategoryDto> categoryDtos = categoryRepository.getAllCategories(mainCategoryId);
-        categoryDtos.stream().forEach(categoryDto -> {
-            categoryDto.setMainCategoryName(mainCategoriesRepository.getMainCategoryNameById(categoryDto.getMainCategoryId()));
-            categoryDto.setImageUrl(categoryDto.getImageUrl() != null ? imagePath + categoryDto.getImageUrl() : null);
-        });
-
+        List<CategoryDto> categoryDtos = categoryRepository.getAllCategories(mainCategoryId,imagePath);
         return categoryDtos;
     }
 

@@ -20,7 +20,7 @@ public interface CategoryRepository extends JpaRepository<Categories, Long> {
            "WHERE (:mainCategoryId IS NULL OR c.mainCategoryId = :mainCategoryId) " +
            "AND c.status = 'ACTIVE' " +
            "ORDER BY c.createdAt")
-    List<CategoryDto> getAllCategories(Long mainCategoryId);
+    List<CategoryDto> getAllCategories(Long mainCategoryId,String imagePath);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.CategoryDto(c.id,c.name,c.description, " +
            "CASE WHEN c.imageUrl IS NOT NULL THEN CONCAT(RTRIM(:imagePath), LTRIM(c.imageUrl)) ELSE NULL END, " +
