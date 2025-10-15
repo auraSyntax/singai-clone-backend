@@ -7,6 +7,7 @@ import com.aura.syntax.pos.management.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -29,10 +30,12 @@ public class StockController {
 
     @GetMapping("/get-all")
     public PaginatedResponseDto<StockDto> getAllStocksPagination(@RequestParam(value = "page") Integer page,
-                                                                      @RequestParam(value = "size") Integer size,
-                                                                      @RequestParam(value = "search",required = false) String search,
-                                                                 @RequestParam(value = "productId",required = false) Long productId){
-        return stockService.getAllStocksPagination(page,size,search,productId);
+                                                                 @RequestParam(value = "size") Integer size,
+                                                                 @RequestParam(value = "search",required = false) String search,
+                                                                 @RequestParam(value = "productId",required = false) Long productId,
+                                                                 @RequestParam(value = "startDate",required = false) LocalDate startDate,
+                                                                 @RequestParam(value = "endDate",required = false)LocalDate endDate){
+        return stockService.getAllStocksPagination(page,size,search,productId,startDate,endDate);
     }
 
     @GetMapping("/get-by-id")

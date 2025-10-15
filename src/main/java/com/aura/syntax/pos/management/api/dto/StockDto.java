@@ -24,10 +24,11 @@ public class StockDto {
     private Set<StockItemsDto> stockItemsDtos;
     private Set<ProductDto> productDtos;
 
-    public StockDto(Long id, String stockName, String invoiceNumber, Double total) {
+    public StockDto(Long id, String stockName, String invoiceNumber, Double total,LocalDateTime dateTime) {
         this.id = id;
         this.stockName = stockName;
         this.invoiceNumber = invoiceNumber;
         this.total = total;
+        this.dateTime = dateTime;
     }
 }

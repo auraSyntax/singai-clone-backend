@@ -62,11 +62,14 @@ public class ProductService {
                 .orElseThrow(() -> new ServiceException("Product not found","Bad request", HttpStatus.BAD_REQUEST));
         return ProductDto.builder()
                 .id(product.getId())
+                .productName(product.getProductName())
                 .type(product.getType().getMappedValue())
                 .minimumStock(product.getMinimumStock())
                 .productName(product.getProductName())
                 .currentStock(product.getCurrentStock())
                 .isActive(product.getIsActive())
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
                 .build();
     }
 

@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -17,10 +19,21 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
            "FROM Stock i ")
     List<StockDto> getAllStock();
 
-    @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(i.id, i.stockName, i.invoiceNumber, i.total) " +
-           "FROM Stock i " +
-           "WHERE (:search IS NULL OR LOWER(i.stockName) LIKE LOWER(CONCAT('%', :search, '%')))")
-    Page<StockDto> getAllStockPagination(Pageable pageable, String search);
+    @Query("""
+       SELECT NEW com.aura.syntax.pos.management.api.dto.StockDto(
+           i.id, i.stockName, i.invoiceNumber, i.total, i.dateTime
+       )
+       FROM Stock i
+       WHERE (:search IS NULL OR LOWER(i.stockName) LIKE LOWER(CONCAT('%', :search, '%')))
+         AND (
+             (:startDate IS NULL OR :endDate IS NULL)
+             OR (DATE(i.dateTime) BETWEEN :startDate AND :endDate)
+         )
+       """)
+    Page<StockDto> getAllStockPagination(Pageable pageable,
+                                         @Param("search") String search,
+                                         @Param("startDate") LocalDate startDate,
+                                         @Param("endDate") LocalDate endDate);
 
     @Query("SELECT NEW com.aura.syntax.pos.management.api.dto.StockItemsDto(s.id, s.quantity, s.costPerUnit, s.unit, s.salesPrice, s.retailPrice, p.productName) " +
            "FROM StockItems s " +

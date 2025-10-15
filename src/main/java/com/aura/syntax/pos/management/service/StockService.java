@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -135,9 +136,9 @@ public class StockService {
         return stockRepository.getAllStock();
     }
 
-    public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search,Long productId) {
+    public PaginatedResponseDto<StockDto> getAllStocksPagination(Integer page, Integer size, String search, Long productId, LocalDate startDate,LocalDate endDate) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable, search);
+        Page<StockDto> ingredientsDtos = stockRepository.getAllStockPagination(pageable, search,startDate,endDate);
         PaginatedResponseDto<StockDto> ingredientsDtoPaginatedResponseDto = new PaginatedResponseDto<>();
         List<StockDto> ingredientsDtosContent = ingredientsDtos.getContent();
         ingredientsDtosContent.forEach(stockDto -> {
@@ -157,6 +158,7 @@ public class StockService {
                 ServiceException("Stock not found", "Bad request", HttpStatus.BAD_REQUEST));
         return StockDto.builder()
                 .id(stock.getId())
+                .stockName(stock.getStockName())
                 .total(stock.getTotal())
                 .invoiceNumber(stock.getInvoiceNumber())
                 .dateTime(stock.getDateTime())

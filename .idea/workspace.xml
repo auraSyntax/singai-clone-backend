@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="60cdc4ed-b32d-4ec3-9a50-210feb5ec037" name="Changes" comment="commitn1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/PosManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/PosManagementApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/CategoryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/CategoryDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/MenuItemsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/MenuItemsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/TableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/TableService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/controller/StockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/StockDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/api/dto/StockDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/StockRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/repository/StockRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/StockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aura/syntax/pos/management/service/StockService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
@@ -75,7 +74,7 @@
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/java/com/aura/syntax/pos/management/config&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/--/Singai pos management system'/BE/singai_pos_management_backend/src/main/resources/templates&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
@@ -83,11 +82,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\resources\templates" />
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\config" />
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\service" />
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management" />
       <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend" />
-      <recent name="D:\--\Singai pos management system'\BE\singai_pos_management_backend\src\main\java\com\aura\syntax\pos\management\repository" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.aura.syntax.pos.management.api.controller.advice" />
@@ -168,22 +167,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751689485989</updated>
-    </task>
-    <task id="LOCAL-00007" summary="commitn1">
-      <option name="closed" value="true" />
-      <created>1753183322743</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1753183322743</updated>
-    </task>
-    <task id="LOCAL-00008" summary="commitn1">
-      <option name="closed" value="true" />
-      <created>1753187029723</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1753187029723</updated>
     </task>
     <task id="LOCAL-00009" summary="commitn1">
       <option name="closed" value="true" />
@@ -561,7 +544,23 @@
       <option name="project" value="LOCAL" />
       <updated>1758426425668</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1758879467233</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1758879467233</updated>
+    </task>
+    <task id="LOCAL-00057" summary="commitn1">
+      <option name="closed" value="true" />
+      <created>1759032759154</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1759032759155</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
