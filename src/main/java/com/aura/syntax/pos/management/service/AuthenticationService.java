@@ -1,9 +1,6 @@
 package com.aura.syntax.pos.management.service;
 
-import com.aura.syntax.pos.management.api.dto.AuthRequest;
-import com.aura.syntax.pos.management.api.dto.AuthResponse;
-import com.aura.syntax.pos.management.api.dto.RefreshTokenRequest;
-import com.aura.syntax.pos.management.api.dto.UserDto;
+import com.aura.syntax.pos.management.api.dto.*;
 import com.aura.syntax.pos.management.config.JwtService;
 import com.aura.syntax.pos.management.config.RefreshTokenService;
 import com.aura.syntax.pos.management.entity.RefreshToken;
@@ -11,6 +8,7 @@ import com.aura.syntax.pos.management.entity.User;
 import com.aura.syntax.pos.management.exception.ServiceException;
 import com.aura.syntax.pos.management.repository.RoleRepository;
 import com.aura.syntax.pos.management.repository.UserRepository;
+import com.cloudinary.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,6 +17,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,10 @@ public class AuthenticationService {
     @Value("${app.jwt.refresh.duration}")
     private String expirationTime;
 
+    @Value("${admin.email}")
+    private String adminEmail;
+
+    private final EmailNotificationService emailNotificationService;
 
     public AuthResponse authenticate(AuthRequest request) {
         try {
@@ -89,5 +95,28 @@ public class AuthenticationService {
     private Authentication authenticateUser(String email, String password) {
         return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password));
+    }
+
+    public void sendEmail(MessageDto messageDto) {
+        try {
+            EmailDataDto emailDataDto = new EmailDataDto();
+            emailDataDto.setSubject("User Interested");
+            emailDataDto.setServiceProvider("singai");
+            emailDataDto.setMailTemplateName("user_interest");
+            emailDataDto.setRecipients(Collections.singletonList(adminEmail));
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("firstName", messageDto.getFirstName());
+            data.put("lastName", messageDto.getLastName());
+            data.put("contactNumber",messageDto.getContactNumber());
+            data.put("email",messageDto.getEmail());
+            data.put("subject",messageDto.getSubject());
+            data.put("message",messageDto.getMessage());
+            emailDataDto.setData(data);
+
+            emailNotificationService.sendEmailWithAttachment(emailDataDto);
+        } catch (Exception e) {
+            throw new ServiceException("EMAIL_SENDING_FAILED", "Bad request", HttpStatus.BAD_REQUEST);
+        }
     }
 }

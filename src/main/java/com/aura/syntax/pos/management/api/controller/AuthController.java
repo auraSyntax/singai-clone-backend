@@ -2,6 +2,7 @@ package com.aura.syntax.pos.management.api.controller;
 
 import com.aura.syntax.pos.management.api.dto.AuthRequest;
 import com.aura.syntax.pos.management.api.dto.AuthResponse;
+import com.aura.syntax.pos.management.api.dto.MessageDto;
 import com.aura.syntax.pos.management.api.dto.RefreshTokenRequest;
 import com.aura.syntax.pos.management.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,10 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return ResponseEntity.ok(service.refreshToken(request));
+    }
+
+    @PostMapping
+    public void sendEmail(@RequestBody MessageDto messageDto){
+        service.sendEmail(messageDto);
     }
 }
