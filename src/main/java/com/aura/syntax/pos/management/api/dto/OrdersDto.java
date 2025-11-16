@@ -39,11 +39,13 @@ public class OrdersDto {
     private Integer orderPreparationTime;
     private String createdAt;
     private String updatedAt;
+    private Double cashPayment;
+    private Double cardPayment;
 
     public OrdersDto(Long id, String orderNumber, Long tableId, Long waiterId, OrderType orderType, OrderStatus orderStatus,
                      PaymentMethod paymentMethod, PaymentStatus paymentStatus, String customerName, String customerPhone, String notes, Double subTotal,
                      Double taxAmount, Double discountAmount, String tableName, String waiterName,
-                     LocalDateTime createdAt, LocalDateTime updatedAt) {
+                     LocalDateTime createdAt, LocalDateTime updatedAt, Double totalAmount, Double cashPayment, Double cardPayment) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.tableId = tableId;
@@ -62,6 +64,9 @@ public class OrdersDto {
         this.waiterName = waiterName;
         this.createdAt = createdAt != null ? createdAt.toString() : null;
         this.updatedAt = updatedAt != null ? updatedAt.toString() : null;
+        this.cashPayment = cashPayment;
+        this.cardPayment = cardPayment;
+        this.totalAmount = totalAmount;
     }
 
     public OrdersDto(Long id, Double subTotal, Double taxAmount, Double discountAmount,PaymentMethod paymentMethod) {

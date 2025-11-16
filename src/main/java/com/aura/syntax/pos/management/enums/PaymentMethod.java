@@ -9,6 +9,7 @@ import java.util.List;
 public enum PaymentMethod {
     CASH("Cash"),
     CARD("Card"),
+    CARD_CASH("Card cash"),
     UPI("Upi"),
     OTHER("Other");
 

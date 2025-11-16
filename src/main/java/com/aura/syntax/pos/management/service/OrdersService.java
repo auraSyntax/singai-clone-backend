@@ -16,14 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -184,21 +181,6 @@ public class OrdersService {
                 orderItemsDto.setImageUrl(orderItemsDto.getImageUrl() != null ? imagePath + orderItemsDto.getImageUrl() : null);
             });
 
-            Double subTotal = orderItemsDtos.stream()
-                    .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
-                    .sum();
-
-            Double total = subTotal;
-            if (ordersDto.getTaxAmount() != null) {
-                total += ordersDto.getTaxAmount();
-            }
-            if (ordersDto.getDiscountAmount() != null) {
-                total -= ordersDto.getDiscountAmount();
-            }
-
-            ordersDto.setSubTotal(subTotal);
-            ordersDto.setTotalAmount(total);
-
             if (!orderItemsDtos.isEmpty()) {
                 int totalPrepTime = orderItemsDtos.stream()
                         .mapToInt(item -> item.getPreparationTime() != null ? item.getPreparationTime() : 0)
@@ -287,6 +269,30 @@ public class OrdersService {
             existingOrder.setOrderItems(orderItems);
         }
 
+        Double subTotal = ordersDto.getOrderItemsDtos() != null ? ordersDto.getOrderItemsDtos().stream()
+                .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
+                .sum() : 0;
+
+        Double total = subTotal;
+        if (ordersDto.getTaxAmount() != null) {
+            total += ordersDto.getTaxAmount();
+        }
+        if (ordersDto.getDiscountAmount() != null) {
+            total -= ordersDto.getDiscountAmount();
+        }
+
+        if (ordersDto.getPaymentMethod().equals(PaymentMethod.CARD_CASH.getMappedValue())) {
+            existingOrder.setCashPayment(ordersDto.getCashPayment());
+            existingOrder.setCardPayment(ordersDto.getCardPayment());
+            existingOrder.setTotalAmount(ordersDto.getCardPayment() + ordersDto.getCashPayment());
+        } else if (ordersDto.getPaymentMethod().equals(PaymentMethod.CASH.getMappedValue())) {
+            existingOrder.setCashPayment(total);
+            existingOrder.setTotalAmount(total);
+        } else if (ordersDto.getPaymentMethod().equals(PaymentMethod.CARD.getMappedValue())) {
+            existingOrder.setCardPayment(total);
+            existingOrder.setTotalAmount(total);
+        }
+        existingOrder.setSubTotal(subTotal);
         ordersRepository.save(existingOrder);
 
         if (ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {

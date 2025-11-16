@@ -24,7 +24,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
            "o.id, o.orderNumber, o.tableId, o.waiterId, o.orderType, o.orderStatus, " +
            "o.paymentMethod, o.paymentStatus, o.customerName, o.customerPhone, o.notes, " +
            "o.subTotal, o.discountAmount, o.taxAmount, t.tableNumber, u.lastName AS waiterName, " +
-           "o.createdAt, o.updatedAt) " +
+           "o.createdAt, o.updatedAt,o.totalAmount,o.cashPayment,o.cardPayment) " +
            "FROM Orders o " +
            "LEFT JOIN Tables t ON o.tableId = t.id " +
            "LEFT JOIN User u ON o.waiterId = u.id " +

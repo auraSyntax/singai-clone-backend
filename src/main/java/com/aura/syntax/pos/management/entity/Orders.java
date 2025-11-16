@@ -42,4 +42,8 @@ public class Orders {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "orderId")
     private Set<OrderItems> orderItems;
+
+    private Double cashPayment;
+    private Double cardPayment;
+    private Double totalAmount;
 }
