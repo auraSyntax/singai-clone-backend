@@ -39,15 +39,22 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-        if (accessor != null) {
-            StompCommand command = accessor.getCommand();
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
-            if (StompCommand.CONNECT.equals(command)) {
-                notifyKitchen();
+        if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+
+            String token = accessor.getFirstNativeHeader("Authorization");
+
+            if (token == null || !token.startsWith("Bearer ")) {
+                throw new IllegalArgumentException("Missing Authorization header");
             }
+
+            log.info("WebSocket token received: {}", token);
+
+            accessor.getSessionAttributes().put("token", token);
         }
+
         return message;
     }
 
@@ -61,11 +68,12 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
         }
     }
 
-    public void notifyKitchen() {
+    public void notifyKitchen(String sessionId) {
         new Thread(() -> {
             try {
+                String token = socketService.getTokenForSession(sessionId);
 
-                OrdersDto ordersWebSocketDtos = socketService.getOrdersForSocket();
+                OrdersDto ordersWebSocketDtos = socketService.getOrdersForSocket(token);
 
                 String json = new ObjectMapper().writeValueAsString(ordersWebSocketDtos);
                 Thread.sleep(2000);

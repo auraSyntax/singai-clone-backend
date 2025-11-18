@@ -4,6 +4,7 @@ import com.aura.syntax.pos.management.api.dto.OrderItemsDto;
 import com.aura.syntax.pos.management.api.dto.OrdersDto;
 import com.aura.syntax.pos.management.config.JwtTokenDto;
 import com.aura.syntax.pos.management.config.TokenProperties;
+import com.aura.syntax.pos.management.config.WebSocketSessionStore;
 import com.aura.syntax.pos.management.repository.OrdersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,15 @@ public class SocketService {
 
     private static final Long CHEF_ROLE_ID = 3L;
 
+    public String getTokenForSession(String sessionId) {
+        return WebSocketSessionStore.getToken(sessionId);
+    }
 
-    public OrdersDto getOrdersForSocket() {
 
-        JwtTokenDto token = tokenProperties.getTokenPropertiesFromToken();
-        Long roleId = token.getRoleId();
+    public OrdersDto getOrdersForSocket(String token) {
+
+        JwtTokenDto dto = tokenProperties.getTokenFromHeader(token);
+        Long roleId = dto.getRoleId();
 
         if (roleId.equals(CHEF_ROLE_ID)) {
             log.info("User is CHEF → Skipping WebSocket order response.");

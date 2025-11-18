@@ -2,7 +2,6 @@ package com.aura.syntax.pos.management.config;
 
 import com.aura.syntax.pos.management.exception.ServiceException;
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,50 +18,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TokenProperties {
 
-    private final HttpServletRequest request;
     private final JwtService jwtService;
 
     @Before("@annotation(scope)")
     public void checkScope(Scope scope) {
-        String authHeader = request.getHeader("Authorization");
+        // This method only works for HTTP requests
+        String authHeader = RequestContextHolderUtil.getAuthorizationHeader();
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new ServiceException("NO_TOKEN_PROVIDED", "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
         }
 
-        String token = authHeader.substring(7);
-
-        Claims claims;
-        try {
-            claims = jwtService.extractAllClaims(token);
-        } catch (Exception e) {
-            throw new ServiceException("INVALID_TOKEN", "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
-        }
-
-        // Extract user_id and role_id from JWT
-        Object roleIdObj = claims.get("role_id");
-        Object userIdObj = claims.get("user_id");
-
-        if (roleIdObj == null || userIdObj == null) {
-            throw new ServiceException("TOKEN_MISSING_REQUIRED_CLAIMS", "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
-        }
-
-        String userRole = roleIdObj.toString();
-        String userId = userIdObj.toString();
+        JwtTokenDto dto = getTokenFromHeader(authHeader);
 
         List<String> allowedRoles = Arrays.asList(scope.value());
-
         log.info("Allowed Roles = {}", allowedRoles);
-        log.info("User Role = {}", userRole);
-        log.info("User ID = {}", userId); // <----- YOU CAN GET USER ID HERE
+        log.info("User Role = {}", dto.getRoleId());
+        log.info("User ID = {}", dto.getUserId());
 
-        if (!allowedRoles.contains(userRole)) {
+        if (!allowedRoles.contains(String.valueOf(dto.getRoleId()))) {
             throw new ServiceException("YOUR_ROLE_IS_NOT_AUTHORIZED", "UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
         }
     }
 
-    public JwtTokenDto getTokenPropertiesFromToken() {
-        String token = request.getHeader("Authorization").substring(7);
+    public JwtTokenDto getTokenFromHeader(String header) {
+        if (header.startsWith("Bearer ")) {
+            header = header.substring(7);
+        }
+        return getTokenFromRawToken(header);
+    }
+
+    public JwtTokenDto getTokenFromRawToken(String token) {
         Claims claims = jwtService.extractAllClaims(token);
 
         return JwtTokenDto.builder()

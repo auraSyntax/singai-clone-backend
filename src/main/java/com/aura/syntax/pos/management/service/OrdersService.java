@@ -1,6 +1,7 @@
 package com.aura.syntax.pos.management.service;
 
 import com.aura.syntax.pos.management.api.dto.*;
+import com.aura.syntax.pos.management.config.WebSocketSessionStore;
 import com.aura.syntax.pos.management.config.websocket.WebSocketChannelInterceptor;
 import com.aura.syntax.pos.management.entity.OrderItems;
 import com.aura.syntax.pos.management.entity.Orders;
@@ -281,22 +282,22 @@ public class OrdersService {
             total -= ordersDto.getDiscountAmount();
         }
 
-        if (ordersDto.getPaymentMethod().equals(PaymentMethod.CARD_CASH.getMappedValue())) {
+        if (ordersDto.getPaymentMethod() != null && ordersDto.getPaymentMethod().equals(PaymentMethod.CARD_CASH.getMappedValue())) {
             existingOrder.setCashPayment(ordersDto.getCashPayment());
             existingOrder.setCardPayment(ordersDto.getCardPayment());
             existingOrder.setTotalAmount(ordersDto.getCardPayment() + ordersDto.getCashPayment());
-        } else if (ordersDto.getPaymentMethod().equals(PaymentMethod.CASH.getMappedValue())) {
+        } else if (ordersDto.getPaymentMethod() != null && ordersDto.getPaymentMethod().equals(PaymentMethod.CASH.getMappedValue())) {
             existingOrder.setCashPayment(total);
             existingOrder.setTotalAmount(total);
-        } else if (ordersDto.getPaymentMethod().equals(PaymentMethod.CARD.getMappedValue())) {
+        } else if (ordersDto.getPaymentMethod() != null && ordersDto.getPaymentMethod().equals(PaymentMethod.CARD.getMappedValue())) {
             existingOrder.setCardPayment(total);
             existingOrder.setTotalAmount(total);
         }
         existingOrder.setSubTotal(subTotal);
         ordersRepository.save(existingOrder);
 
-        if (ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
-            webSocketChannelInterceptor.notifyKitchen();
+        if (ordersDto.getOrderStatus() != null && ordersDto.getOrderStatus().equalsIgnoreCase(OrderStatus.CONFIRMED.getMappedValue())) {
+            WebSocketSessionStore.getAllSessionIds().forEach(webSocketChannelInterceptor::notifyKitchen);
         }
 
         return new ResponseDto("Order updated successfully");
