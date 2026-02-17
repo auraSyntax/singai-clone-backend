@@ -1,12 +1,20 @@
-
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
+# ---------- Build stage ----------
+FROM maven:3.9.9-eclipse-temurin-17 AS build
+WORKDIR /build
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Run Stage
-FROM openjdk:17.0.1-jdk-slim
+# ---------- Run stage ----------
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
-COPY --from=build /app/target/singai_pos_management-1.0.0-SNAPSHOT.jar /app/singai_pos_management-1.0.0-SNAPSHOT.jar
-EXPOSE 9001
-ENTRYPOINT ["java", "-jar", "/app/singai_pos_management-1.0.0-SNAPSHOT.jar"]
+
+# copy jar
+COPY --from=build /build/target/*.jar app.jar
+
+# Railway requires dynamic port
+ENV PORT=8080
+
+EXPOSE 8080
+
+# run spring boot
+ENTRYPOINT ["java","-jar","app.jar"]
